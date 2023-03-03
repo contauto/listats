@@ -8,6 +8,7 @@ import "bootstrap/dist/js/bootstrap.js";
 import Nav from "./Nav";
 import { Provider } from "react-redux";
 import configureStore from "./redux/ConfigureStore";
+import Footer from "./Footer";
 
 const store = configureStore();
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -17,6 +18,7 @@ root.render(
       <div>
         <Nav />
         <App />
+        <Footer/>
       </div>
     </React.StrictMode>
   </Provider>

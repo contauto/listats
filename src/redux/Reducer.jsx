@@ -1,12 +1,7 @@
 import * as ACTIONS from "./Constants";
+import { originalState } from "./DefaultState";
 
-const defaultState = {
-  isLoggedIn: false,
-  display_name: undefined,
-  image: undefined,
-  access_token:undefined,
-  refresh_token:undefined
-};
+const defaultState = originalState
 
 const Reducer = (state = { ...defaultState }, action) => {
   if (action.type === ACTIONS.LOGOUT_SUCCESS) {

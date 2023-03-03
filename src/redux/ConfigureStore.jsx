@@ -3,19 +3,14 @@ import thunk from "redux-thunk";
 import SecureLS from "secure-ls";
 import Reducer from "./Reducer";
 import { setAuthorizationHeader } from "../ApiRequests";
+import { originalState } from "./DefaultState";
 
 const secureLs = new SecureLS();
 
 const getStateFromStorage = () => {
   const listatsAuth = secureLs.get("listats-auth");
 
-  let stateInLocalStorage = {
-    isLoggedIn: false,
-    display_name: undefined,
-    image: undefined,
-    access_token: undefined,
-    refresh_token: undefined,
-  };
+  let stateInLocalStorage = originalState
 
   if (listatsAuth) {
     return listatsAuth;
