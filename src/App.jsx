@@ -109,8 +109,8 @@ export default function App() {
                           width={80}
                         ></img>
                         <span className="bold" key={id + 200}>
-                          {item.name.length > 70
-                            ? item.name.slice(0, 70)
+                          {item.name.length > 64
+                            ? item.name.slice(0, 64)
                             : item.name}
                         </span>
 
