@@ -1,12 +1,11 @@
 import { auth, getData, setAuthorizationHeader } from "../ApiRequests";
 import {
   ME,
-  TRACK_SHORT_TERM,
-  TRACK_LONG_TERM,
-  TRACK_MEDIUM_TERM,
-  ARTIST_LONG_TERM,
-  ARTIST_MEDIUM_TERM,
-  ARTIST_SHORT_TERM,
+  REFRESH,
+  TOKEN,
+  client_id,
+  client_secret,
+  refreshBody,
 } from "../Constants";
 import * as ACTIONS from "./Constants";
 
@@ -25,6 +24,13 @@ export const loginSuccess = (authState) => {
   };
 };
 
+export const dataSuccess = (data) => {
+  return {
+    type: ACTIONS.DATA_SUCCESS,
+    payload: data,
+  };
+};
+
 export const loginHandler = (client_id, client_secret, url, body) => {
   return async function (dispatch) {
     const response = await auth(client_id, client_secret, url, body);
@@ -33,32 +39,40 @@ export const loginHandler = (client_id, client_secret, url, body) => {
       access_token: response.data.access_token,
     });
     const me = await getData(ME);
-
-    const shortTracks = await getData(TRACK_SHORT_TERM);
-
-    const mediumTracks = getData(TRACK_MEDIUM_TERM);
-
-    const longTracks = getData(TRACK_LONG_TERM);
-
-    const shortArtists = getData(ARTIST_SHORT_TERM);
-
-    const mediumArtists = getData(ARTIST_MEDIUM_TERM);
-
-    const longArtists = getData(ARTIST_LONG_TERM);
-
+    const refresh_token = response.data.refresh_token
+      ? response.data.refresh_token
+      : REFRESH();
     const authState = {
       access_token: response.data.access_token,
-      refresh_token: response.data.refresh_token,
+      refresh_token,
       display_name: me.data.display_name,
       image: me.data.images[0].url,
-      shortTracks: shortTracks.data,
-      mediumTracks: mediumTracks.data,
-      longTracks: longTracks.data,
-      shortArtists: shortArtists.data,
-      mediumArtists: mediumArtists.data,
-      longArtists: longArtists.data,
     };
     dispatch(loginSuccess(authState));
     return { response, me };
+  };
+};
+
+export const dataHandler = (type, text) => {
+  return async function (dispatch) {
+    await getData(type)
+      .then((response) => {
+        const storedData = {
+          data: response.data,
+          text,
+        };
+
+        dispatch(dataSuccess(storedData));
+        return response;
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response.status === 401) {
+          dispatch(
+            loginHandler(client_id, client_secret, TOKEN, refreshBody())
+          );
+        }
+        console.log(error.message);
+      });
   };
 };

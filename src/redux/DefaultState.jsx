@@ -9,5 +9,7 @@ export const originalState={
   longTracks:undefined,
   shortArtists:undefined,
   mediumArtists:undefined,
-  longArtists:undefined
+  longArtists:undefined,
+  data:undefined,
+  text:undefined
 }

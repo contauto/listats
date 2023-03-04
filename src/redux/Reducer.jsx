@@ -1,7 +1,7 @@
 import * as ACTIONS from "./Constants";
 import { originalState } from "./DefaultState";
 
-const defaultState = originalState
+const defaultState = originalState;
 
 const Reducer = (state = { ...defaultState }, action) => {
   if (action.type === ACTIONS.LOGOUT_SUCCESS) {
@@ -10,6 +10,11 @@ const Reducer = (state = { ...defaultState }, action) => {
     return {
       ...action.payload,
       isLoggedIn: true,
+    };
+  } else if (action.type === ACTIONS.DATA_SUCCESS) {
+    return {
+      ...state,
+      ...action.payload,
     };
   }
   return state;

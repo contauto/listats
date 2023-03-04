@@ -1,6 +1,15 @@
+import SecureLS from "secure-ls";
+
 export const redirect_uri = process.env.REACT_APP_REDIRECT_URI;
 export const client_id = process.env.REACT_APP_CLIENT_ID;
 export const client_secret = process.env.REACT_APP_CLIENT_SECRET;
+
+export const REFRESH=()=>{
+  const secureLs = new SecureLS();
+  const listatsAuth = secureLs.get("listats-auth");
+  const refresh_token = listatsAuth.refresh_token;
+  return refresh_token
+}
 
 export const AUTHORIZE = () => {
   let url = "https://accounts.spotify.com/authorize";
@@ -22,6 +31,14 @@ export const body = (code) => {
   return body;
 };
 
+export const refreshBody = () => {
+  const refresh_token=REFRESH()
+  let body = "grant_type=refresh_token";
+  body += "&refresh_token=" + refresh_token;
+  body += "&client_id=" + client_id;
+  return body;
+};
+
 export const TOKEN = "https://accounts.spotify.com/api/token";
 
 export const ME = "https://api.spotify.com/v1/me/";
@@ -39,3 +56,5 @@ export const ARTIST_MEDIUM_TERM =
   "https://api.spotify.com/v1/me/top/artists?limit=50&time_range=medium_term";
 export const ARTIST_LONG_TERM =
   "https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term";
+
+export const base = "https://api.spotify.com";

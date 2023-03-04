@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import {
   TOKEN,
-  TRACK_SHORT_TERM,
+  base,
   body,
   client_id,
   client_secret,
@@ -10,15 +10,31 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { loginHandler } from "./redux/Actions";
 import { useApiProgress } from "./PendingApiCall.jsx";
+import { Card } from "./CardComponent";
 
 export default function App() {
-  const { shortTracks, isLoggedIn } = useSelector((store) => ({
-    shortTracks: store.shortTracks,
+  const { isLoggedIn, data, text } = useSelector((store) => ({
     isLoggedIn: store.isLoggedIn,
+    data: store.data,
+    text: store.text,
   }));
+  const [windowSize, setWindowSize] = useState([
+    window.innerWidth,
+    window.innerHeight,
+  ]);
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowSize([window.innerWidth, window.innerHeight]);
+    };
 
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  });
   const dispatch = useDispatch();
-  const pendingApiCall = useApiProgress("get", TRACK_SHORT_TERM);
+  const pendingApiCall = useApiProgress("get", base, false);
 
   const handleRedirect = () => {
     let code = null;
@@ -31,8 +47,6 @@ export default function App() {
     return code;
   };
 
-  let text = "Top Tracks-Last 4 Weeks";
-
   useEffect(() => {
     if (window.location.search.length > 0) {
       const code = handleRedirect();
@@ -43,6 +57,7 @@ export default function App() {
               const response = await dispatch(
                 loginHandler(client_id, client_secret, TOKEN, body(code))
               );
+
               return response;
             } catch (error) {
               console.log("login", error);
@@ -56,20 +71,19 @@ export default function App() {
 
       takeData();
     }
-  }, [dispatch]);
+  }, [dispatch, data]);
 
   return (
     <div>
       <div className="container mt-4">
         <div className="row">
-          <div className="col-md-12">
-            {isLoggedIn && shortTracks && (
+          <div>
+            {isLoggedIn && data && (
               <div className="text-center">
-                
-                <h3 >{text}</h3>
+                <h3>{text}</h3>
               </div>
             )}
-            {!isLoggedIn && pendingApiCall && (
+            {pendingApiCall && !data && (
               <div
                 className="spinner-border position-absolute top-50 start-50"
                 role="status"
@@ -77,30 +91,42 @@ export default function App() {
                 <span className="visually-hidden">Loading...</span>
               </div>
             )}
-            {shortTracks &&
-              shortTracks.items.map((track, id) => {
+            {data &&
+              data.items.map((item, id) => {
                 return (
-                  <div key={track.preview_url}>
-                    <span className="bold" key={track.popularity}>
-                      {id + 1 < 10 ? "0" + (id + 1) : id + 1}
-                    </span>
-                    <img
-                      key={id}
-                      src={track.album.images[2].url}
-                      className="img-thumbnail m-2 p-0"
-                      alt="album-cover"
-                    ></img>
-                    <span className="bold" key={track.name}>
-                      {track.name.length > 70
-                        ? track.name.slice(0, 70)
-                        : track.name}
-                    </span>
-                    <q className="bold float-end mt-4" key={track.id}>
-                      {track.artists[0].name}
-                    </q>
-                  </div>
+                  <React.Fragment key={id}>
+                    {item.type === "track" && (
+                      <div key={id + 50}>
+                        <span className="bold" key={id + 100}>
+                          {id + 1 < 10 ? "0" + (id + 1) : id + 1}
+                        </span>
+                        <img
+                          key={id + 150}
+                          src={item.album.images[1].url}
+                          className="img-thumbnail m-2 p-0"
+                          alt="album-cover"
+                          height={80}
+                          width={80}
+                        ></img>
+                        <span className="bold" key={id + 200}>
+                          {item.name.length > 70
+                            ? item.name.slice(0, 70)
+                            : item.name}
+                        </span>
+
+                        <q className="bold float-end mt-4" key={id + 250}>
+                          {item.artists[0].name}
+                        </q>
+                        <br />
+                      </div>
+                    )}
+                  </React.Fragment>
                 );
               })}
+              {
+                data&&data.items[0].type==="artist" && 
+                <Card screenSize={windowSize} items={data.items}/>
+              }
           </div>
         </div>
       </div>
