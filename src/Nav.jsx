@@ -36,8 +36,17 @@ export default function Nav() {
     dispatch(dataHandler(url,text));
   };
 
-  return (<div className="container">
- <div className="dropdown">
+  return (
+    <Navbar isBordered={isDark} variant="sticky">
+      <Navbar.Brand>
+        <Text b color="inherit">
+          LISTATS
+        </Text>
+      </Navbar.Brand>
+      <Navbar.Content>
+        {isLoggedIn && (
+          <Navbar.Item>
+            <div className="dropdown">
               <button
                 className="btn btn-secondary dropdown-toggle"
                 type="button"
@@ -79,6 +88,95 @@ export default function Nav() {
                 </li>
               </ul>
             </div>
-  </div>
-           
-  )}
+          </Navbar.Item>
+        )}
+
+        {isLoggedIn && (
+          <Navbar.Item>
+            <div className="dropdown">
+              <button
+                className="btn btn-secondary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Artist
+              </button>
+              <ul className="dropdown-menu">
+                <li>
+                  <h6 style={{cursor:"pointer"}}
+                    onClick={() => {
+                      data(ARTIST_SHORT_TERM,"Top Artists-Last 4 Week");
+                    }}
+                    className="dropdown-item"
+                  >
+                    4 Week
+                  </h6>
+                </li>
+                <li>
+                  <h6 style={{cursor:"pointer"}}
+                    onClick={() => {
+                      data(ARTIST_MEDIUM_TERM,"Top Artists-Last 6 Month");
+                    }}
+                    className="dropdown-item"
+                  >
+                    6 Month
+                  </h6>
+                </li>
+                <li>
+                  <h6 style={{cursor:"pointer"}}
+                    onClick={() => {
+                      data(ARTIST_LONG_TERM,"Top Artists-All Time");
+                    }}
+                    className="dropdown-item"
+                  >
+                    All Time
+                  </h6>
+                </li>
+              </ul>
+            </div>
+          </Navbar.Item>
+        )}
+        {!isLoggedIn && (
+          <Navbar.Item>
+            <Button
+              onPress={requestAuthorization}
+              auto
+              flat
+              as={Link}
+              color={activeColor}
+            >
+              Login With Spotify
+            </Button>
+          </Navbar.Item>
+        )}
+        {isLoggedIn && (
+          <Navbar.Item hideIn={"xs"}>
+            <div className="d-flex mt-1">
+              <img
+                height={60}
+                src={image}
+                className="rounded-circle"
+                alt="Profile"
+              />
+              <h6 className="mt-3 ms-2">{display_name}</h6>
+            </div>
+          </Navbar.Item>
+        )}
+        {isLoggedIn && (
+          <Navbar.Item>
+            <Button
+              onPress={onLogOutSuccess}
+              auto
+              flat
+              as={Link}
+              color={activeColor}
+            >
+              Logout
+            </Button>
+          </Navbar.Item>
+        )}
+      </Navbar.Content>
+    </Navbar>
+  );
+}
