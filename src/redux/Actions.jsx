@@ -65,12 +65,27 @@ export const dataHandler = (type, text) => {
         dispatch(dataSuccess(storedData));
         return response;
       })
-      .catch((error) => {
+      .catch(async(error) => {
         console.log(error);
         if (error.response.status === 401) {
-          dispatch(
+          try{await dispatch(
             loginHandler(client_id, client_secret, TOKEN, refreshBody())
           );
+          await getData(type)
+          .then((response) => {
+            const storedData = {
+              data: response.data,
+              text,
+            };
+    
+            dispatch(dataSuccess(storedData));
+            return response;
+          }) 
+          }
+          catch{
+            console.log("sa")
+          }
+          
         }
         console.log(error.message);
       });
