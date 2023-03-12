@@ -66,7 +66,6 @@ export const dataHandler = (type, text) => {
         return response;
       })
       .catch(async(error) => {
-        console.log(error);
         if (error.response.status === 401) {
           try{await dispatch(
             loginHandler(client_id, client_secret, TOKEN, refreshBody())
@@ -83,11 +82,9 @@ export const dataHandler = (type, text) => {
           }) 
           }
           catch{
-            console.log("sa")
           }
           
         }
-        console.log(error.message);
       });
   };
 };

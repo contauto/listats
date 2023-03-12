@@ -60,12 +60,10 @@ export default function App() {
 
               return response;
             } catch (error) {
-              console.log("login", error);
             }
           };
           await login(code);
         } catch (error) {
-          console.log("takeData", error);
         }
       };
 
