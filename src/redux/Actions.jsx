@@ -47,15 +47,16 @@ export const loginHandler = (client_id, client_secret, url, body) => {
       refresh_token,
       display_name: me.data.display_name,
       image: me.data.images[0].url,
+      userId: me.data.id,
     };
     dispatch(loginSuccess(authState));
     return { response, me };
   };
 };
 
-export const dataHandler = (type, text) => {
+export const dataHandler = (url, text, body) => {
   return async function (dispatch) {
-    await getData(type)
+    await getData(url, body)
       .then((response) => {
         const storedData = {
           data: response.data,
@@ -65,25 +66,22 @@ export const dataHandler = (type, text) => {
         dispatch(dataSuccess(storedData));
         return response;
       })
-      .catch(async(error) => {
+      .catch(async (error) => {
         if (error.response.status === 401) {
-          try{await dispatch(
-            loginHandler(client_id, client_secret, TOKEN, refreshBody())
-          );
-          await getData(type)
-          .then((response) => {
-            const storedData = {
-              data: response.data,
-              text,
-            };
-    
-            dispatch(dataSuccess(storedData));
-            return response;
-          }) 
-          }
-          catch{
-          }
-          
+          try {
+            await dispatch(
+              loginHandler(client_id, client_secret, TOKEN, refreshBody())
+            );
+            await getData(url).then((response) => {
+              const storedData = {
+                data: response.data,
+                text,
+              };
+
+              dispatch(dataSuccess(storedData));
+              return response;
+            });
+          } catch {}
         }
       });
   };

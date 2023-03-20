@@ -11,5 +11,6 @@ export const originalState={
   mediumArtists:undefined,
   longArtists:undefined,
   data:undefined,
-  text:undefined
+  text:undefined,
+  userId:undefined
 }

@@ -3,7 +3,8 @@ import React from "react";
 export const Card = (props) => {
   const { items,screenSize } = props;
 
-  const size=screenSize[0]>1000?320:100
+  const height=screenSize[0]>1000?320:156
+  const width=screenSize[0]>1000?320:100
   return items.map((item, id) => {
     if(id%4!==0)return null
     return (
@@ -11,7 +12,7 @@ export const Card = (props) => {
         <div className="row">
           {items[id]&&
             <div className="col-3 mt-5">
-              <img height={size} width={size}
+              <img height={height} width={width}
                 src={items[id].images[1].url}
                 className="card-img-top"
                 alt="artist"
@@ -25,7 +26,7 @@ export const Card = (props) => {
           }
           {items[id+1]&&
             <div className="col-3 mt-5">
-              <img height={size} width={size}
+              <img height={height} width={width}
                 src={items[id+1].images[1].url}
                 className="card-img-top"
                 alt="artist"
@@ -39,7 +40,7 @@ export const Card = (props) => {
           }
           {items[id+2]&&
             <div className="col-3 mt-5">
-              <img height={size} width={size}
+              <img height={height} width={width}
                 src={items[id+2].images[1].url}
                 className="card-img-top"
                 alt="artist"
@@ -53,7 +54,7 @@ export const Card = (props) => {
           }
           {items[id+3]&&
             <div className="col-3 mt-5">
-              <img height={size} width={size}
+              <img height={height} width={width}
                 src={items[id+3].images[1].url}
                 className="card-img-top"
                 alt="artist"

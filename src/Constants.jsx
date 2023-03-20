@@ -18,7 +18,7 @@ export const AUTHORIZE = () => {
   url += "&redirect_uri=" + encodeURI(redirect_uri);
   url += "&show_dialog=true";
   url +=
-    "&scope=user-read-private user-top-read user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private";
+    "&scope=user-read-private ugc-image-upload user-top-read user-read-email playlist-modify-private user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private";
   return url;
 };
 
@@ -58,3 +58,5 @@ export const ARTIST_LONG_TERM =
   "https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term";
 
 export const base = "https://api.spotify.com";
+
+export const withUserId="https://api.spotify.com/v1/users/"

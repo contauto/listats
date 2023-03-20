@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TOKEN,
   base,
@@ -6,35 +6,56 @@ import {
   client_id,
   client_secret,
   redirect_uri,
+  withUserId,
 } from "./Constants";
 import { useDispatch, useSelector } from "react-redux";
 import { loginHandler } from "./redux/Actions";
 import { useApiProgress } from "./PendingApiCall.jsx";
 import { Card } from "./CardComponent";
+import { getBase64, postData, putData } from "./ApiRequests";
+import { Button } from "@mui/material";
 
 export default function App() {
-  const { isLoggedIn, data, text } = useSelector((store) => ({
+  const { isLoggedIn, data, text, userId } = useSelector((store) => ({
     isLoggedIn: store.isLoggedIn,
     data: store.data,
     text: store.text,
+    userId: store.userId,
   }));
   const [windowSize, setWindowSize] = useState([
     window.innerWidth,
     window.innerHeight,
   ]);
+
+  const playlistSpecs = (name, description) => {
+    const array = { name, description, public: false };
+    return array;
+  };
+
   useEffect(() => {
     const handleWindowResize = () => {
       setWindowSize([window.innerWidth, window.innerHeight]);
     };
 
-    window.addEventListener('resize', handleWindowResize);
+    window.addEventListener("resize", handleWindowResize);
 
     return () => {
-      window.removeEventListener('resize', handleWindowResize);
+      window.removeEventListener("resize", handleWindowResize);
     };
   });
   const dispatch = useDispatch();
   const pendingApiCall = useApiProgress("get", base, false);
+
+  const createPlaylist = (body) => {
+    const url = withUserId + userId + "/playlists";
+    return postData(url, body);
+  };
+
+  const updateCoverImage = async (playlistId) => {
+    const url = base + "/v1/playlists/" + playlistId + "/images";
+    const image = await getBase64();
+    await putData(url, image);
+  };
 
   const handleRedirect = () => {
     let code = null;
@@ -59,12 +80,10 @@ export default function App() {
               );
 
               return response;
-            } catch (error) {
-            }
+            } catch (error) {}
           };
           await login(code);
-        } catch (error) {
-        }
+        } catch (error) {}
       };
 
       takeData();
@@ -121,10 +140,30 @@ export default function App() {
                   </React.Fragment>
                 );
               })}
-              {
-                data&&data.items[0].type==="artist" && 
-                <Card screenSize={windowSize} items={data.items}/>
-              }
+
+            {data && data.items[0].type === "track" && (
+              <div className="mt-3 mb-5 text-center">
+                <Button
+                  size="large"
+                  color="secondary"
+                  variant="contained"
+                  onClick={async () => {
+                    await createPlaylist(
+                      playlistSpecs(text, "Powered by berkemaktav")
+                    ).then((response) => {
+                      console.log(response);
+                      updateCoverImage(response.data.id);
+                    });
+                  }}
+                >
+                  Playlist oluştur
+                </Button>
+              </div>
+            )}
+
+            {data && data.items[0].type === "artist" && (
+              <Card screenSize={windowSize} items={data.items} />
+            )}
           </div>
         </div>
       </div>

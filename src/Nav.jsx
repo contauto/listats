@@ -59,7 +59,7 @@ export default function Nav() {
                 <li>
                   <h6  style={{cursor:"pointer"}}
                     onClick={() => {
-                      data(TRACK_SHORT_TERM,"Top Tracks-Last 4 Week");
+                      (data(TRACK_SHORT_TERM,"Top Tracks-Last 4 Week"));
                     }}
                     className="dropdown-item"
                   >
@@ -116,7 +116,7 @@ export default function Nav() {
                 <li>
                   <h6 style={{cursor:"pointer"}}
                     onClick={() => {
-                      data(ARTIST_MEDIUM_TERM,"Top Artists-Last 6 Month");
+                      (data(ARTIST_MEDIUM_TERM,"Top Artists-Last 6 Month"));
                     }}
                     className="dropdown-item"
                   >
