@@ -151,7 +151,6 @@ export default function App() {
                     await createPlaylist(
                       playlistSpecs(text, "Powered by berkemaktav")
                     ).then((response) => {
-                      console.log(response);
                       updateCoverImage(response.data.id);
                     });
                   }}

@@ -20,7 +20,6 @@ export const getBase64 = async () => {
     responseType: "arraybuffer",
   });
   let raw = Buffer.from(image.data).toString("base64");
-  console.log(raw);
   return raw;
 };
 
