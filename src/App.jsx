@@ -1,3 +1,5 @@
+
+
 import React, { useEffect, useState } from "react";
 import {
   TOKEN,
@@ -32,6 +34,9 @@ export default function App() {
     window.innerWidth,
     window.innerHeight,
   ]);
+
+  const width=windowSize[0]
+
 
   const playlistSpecs = (name, description) => {
     const array = { name, description, public: false };
@@ -146,7 +151,7 @@ export default function App() {
                           width={80}
                         ></img>
                         <span className="bold" key={id + 200}>
-                          {item.name.length > 60
+                          {width < 1000
                             ? item.name.slice(0, 60)
                             : item.name}
                         </span>
@@ -213,8 +218,8 @@ export default function App() {
                         </span>
 
                         <span className="bold" key={id + 200}>
-                          {item.track.name.length > 60
-                            ? item.track.name.slice(0, 60)
+                          {width <1000
+                            ? item.track.name.slice(0, 38)
                             : item.track.name}
                         </span>
 
