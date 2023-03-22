@@ -88,7 +88,6 @@ export default function Nav() {
                 className="btn btn-secondary dropdown-toggle"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-                disabled={pendingApiCall}
               >
                 Track
               </button>
@@ -146,7 +145,6 @@ export default function Nav() {
           <Navbar.Item>
             <div className="dropdown">
               <button
-                disabled={pendingApiCall}
                 className="btn btn-secondary dropdown-toggle"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
