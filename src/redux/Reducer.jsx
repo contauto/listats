@@ -16,6 +16,8 @@ const Reducer = (state = { ...defaultState }, action) => {
       ...state,
       ...action.payload,
     };
+  } else if (action.type === ACTIONS.MAIN_MENU_SUCCESS) {
+    return { ...defaultState, ...action.payload };
   }
   return state;
 };

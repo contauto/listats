@@ -5,6 +5,7 @@ import {
   TOKEN,
   client_id,
   client_secret,
+  recently,
   refreshBody,
 } from "../Constants";
 import * as ACTIONS from "./Constants";
@@ -31,6 +32,13 @@ export const dataSuccess = (data) => {
   };
 };
 
+export const mainMenuSuccess = (state) => {
+  return {
+    type: ACTIONS.MAIN_MENU_SUCCESS,
+    payload: state,
+  };
+};
+
 export const loginHandler = (client_id, client_secret, url, body) => {
   return async function (dispatch) {
     const response = await auth(client_id, client_secret, url, body);
@@ -54,12 +62,13 @@ export const loginHandler = (client_id, client_secret, url, body) => {
   };
 };
 
-export const dataHandler = (url, text, body) => {
+export const dataHandler = (url, text) => {
   return async function (dispatch) {
-    await getData(url, body)
+    await getData(url)
       .then((response) => {
         const storedData = {
           data: response.data,
+          last: undefined,
           text,
         };
 
@@ -75,6 +84,41 @@ export const dataHandler = (url, text, body) => {
             await getData(url).then((response) => {
               const storedData = {
                 data: response.data,
+                text,
+                last: undefined,
+              };
+
+              dispatch(dataSuccess(storedData));
+              return response;
+            });
+          } catch {}
+        }
+      });
+  };
+};
+
+export const lastHandler = (text) => {
+  return async function (dispatch) {
+    await getData(recently)
+      .then((response) => {
+        const storedData = {
+          last: response.data.items,
+          text,
+          data: undefined,
+        };
+        dispatch(dataSuccess(storedData));
+        return response;
+      })
+      .catch(async (error) => {
+        if (error.response.status === 401) {
+          try {
+            await dispatch(
+              loginHandler(client_id, client_secret, TOKEN, refreshBody())
+            );
+            await getData(recently).then((response) => {
+              const storedData = {
+                last: response.data.items,
+                data: undefined,
                 text,
               };
 

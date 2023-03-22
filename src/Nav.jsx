@@ -10,7 +10,7 @@ import {
   TRACK_SHORT_TERM,
 } from "./Constants";
 import { useDispatch, useSelector } from "react-redux";
-import { dataHandler, logoutSuccess } from "./redux/Actions";
+import { dataHandler, lastHandler, logoutSuccess, mainMenuSuccess } from "./redux/Actions";
 
 export default function Nav() {
   const activeColor = "primary";
@@ -20,11 +20,17 @@ export default function Nav() {
     window.location.href = AUTHORIZE();
   };
 
-  const { isLoggedIn, display_name, image } = useSelector((store) => ({
+  const { isLoggedIn, display_name, image,access_token,refresh_token,userId} = useSelector((store) => ({
     display_name: store.display_name,
     image: store.image,
     isLoggedIn: store.isLoggedIn,
+    access_token:store.access_token,
+    refresh_token:store.refresh_token,
+    userId:store.userId,
   }));
+
+  const authState={display_name,image,isLoggedIn,access_token,refresh_token,userId}
+
 
   const dispatch = useDispatch();
 
@@ -36,9 +42,13 @@ export default function Nav() {
     dispatch(dataHandler(url,text));
   };
 
+  const last = (text) => {
+    dispatch(lastHandler(text));
+  };
+
   return (
     <Navbar isBordered={isDark} variant="sticky">
-      <Navbar.Brand>
+      <Navbar.Brand style={{cursor:"pointer"}} onClick={()=>{dispatch(mainMenuSuccess(authState))}}>
         <Text b color="inherit">
           LISTATS
         </Text>
@@ -84,6 +94,16 @@ export default function Nav() {
                     className="dropdown-item"
                   >
                     All Time
+                  </h6>
+                </li>
+                <li>
+                  <h6 style={{cursor:"pointer"}}
+                    onClick={() => {
+                      last("Last Played");
+                    }}
+                    className="dropdown-item"
+                  >
+                    Last Played
                   </h6>
                 </li>
               </ul>

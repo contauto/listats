@@ -60,3 +60,7 @@ export const ARTIST_LONG_TERM =
 export const base = "https://api.spotify.com";
 
 export const withUserId="https://api.spotify.com/v1/users/"
+
+export const recently=base+"/v1/me/player/recently-played"
+
+export const addTrackLink=(playlistId)=>{return base+"/v1/playlists/"+playlistId+"/tracks"}
