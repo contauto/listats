@@ -8,9 +8,16 @@ import {
   TRACK_LONG_TERM,
   TRACK_MEDIUM_TERM,
   TRACK_SHORT_TERM,
+  base,
 } from "./Constants";
 import { useDispatch, useSelector } from "react-redux";
-import { dataHandler, lastHandler, logoutSuccess, mainMenuSuccess } from "./redux/Actions";
+import {
+  dataHandler,
+  lastHandler,
+  logoutSuccess,
+  mainMenuSuccess,
+} from "./redux/Actions";
+import { useApiProgress } from "./functions/PendingApiCall";
 
 export default function Nav() {
   const activeColor = "primary";
@@ -20,17 +27,30 @@ export default function Nav() {
     window.location.href = AUTHORIZE();
   };
 
-  const { isLoggedIn, display_name, image,access_token,refresh_token,userId} = useSelector((store) => ({
+  const {
+    isLoggedIn,
+    display_name,
+    image,
+    access_token,
+    refresh_token,
+    userId,
+  } = useSelector((store) => ({
     display_name: store.display_name,
     image: store.image,
     isLoggedIn: store.isLoggedIn,
-    access_token:store.access_token,
-    refresh_token:store.refresh_token,
-    userId:store.userId,
+    access_token: store.access_token,
+    refresh_token: store.refresh_token,
+    userId: store.userId,
   }));
 
-  const authState={display_name,image,isLoggedIn,access_token,refresh_token,userId}
-
+  const authState = {
+    display_name,
+    image,
+    isLoggedIn,
+    access_token,
+    refresh_token,
+    userId,
+  };
 
   const dispatch = useDispatch();
 
@@ -38,17 +58,24 @@ export default function Nav() {
     dispatch(logoutSuccess());
   };
 
-  const data = (url,text) => {
-    dispatch(dataHandler(url,text));
+  const data = (url, text) => {
+    dispatch(dataHandler(url, text));
   };
 
   const last = (text) => {
     dispatch(lastHandler(text));
   };
 
+  const pendingApiCall = useApiProgress("get", base, false);
+
   return (
     <Navbar isBordered={isDark} variant="sticky">
-      <Navbar.Brand style={{cursor:"pointer"}} onClick={()=>{dispatch(mainMenuSuccess(authState))}}>
+      <Navbar.Brand
+        style={{ cursor: "pointer" }}
+        onClick={() => {
+          dispatch(mainMenuSuccess(authState));
+        }}
+      >
         <Text b color="inherit">
           LISTATS
         </Text>
@@ -59,17 +86,18 @@ export default function Nav() {
             <div className="dropdown">
               <button
                 className="btn btn-secondary dropdown-toggle"
-                type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
+                disabled={pendingApiCall}
               >
                 Track
               </button>
               <ul className="dropdown-menu">
                 <li>
-                  <h6  style={{cursor:"pointer"}}
+                  <h6
+                    style={{ cursor: "pointer" }}
                     onClick={() => {
-                      (data(TRACK_SHORT_TERM,"Top Tracks-Last 4 Week"));
+                      data(TRACK_SHORT_TERM, "Top Tracks-Last 4 Week");
                     }}
                     className="dropdown-item"
                   >
@@ -77,9 +105,10 @@ export default function Nav() {
                   </h6>
                 </li>
                 <li>
-                  <h6 style={{cursor:"pointer"}}
+                  <h6
+                    style={{ cursor: "pointer" }}
                     onClick={() => {
-                      data(TRACK_MEDIUM_TERM,"Top Tracks-Last 6 Month");
+                      data(TRACK_MEDIUM_TERM, "Top Tracks-Last 6 Month");
                     }}
                     className="dropdown-item"
                   >
@@ -87,9 +116,10 @@ export default function Nav() {
                   </h6>
                 </li>
                 <li>
-                  <h6 style={{cursor:"pointer"}}
+                  <h6
+                    style={{ cursor: "pointer" }}
                     onClick={() => {
-                      data(TRACK_LONG_TERM,"Top Tracks-All Time");
+                      data(TRACK_LONG_TERM, "Top Tracks-All Time");
                     }}
                     className="dropdown-item"
                   >
@@ -97,7 +127,8 @@ export default function Nav() {
                   </h6>
                 </li>
                 <li>
-                  <h6 style={{cursor:"pointer"}}
+                  <h6
+                    style={{ cursor: "pointer" }}
                     onClick={() => {
                       last("Last Played");
                     }}
@@ -115,8 +146,8 @@ export default function Nav() {
           <Navbar.Item>
             <div className="dropdown">
               <button
+                disabled={pendingApiCall}
                 className="btn btn-secondary dropdown-toggle"
-                type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
@@ -124,9 +155,10 @@ export default function Nav() {
               </button>
               <ul className="dropdown-menu">
                 <li>
-                  <h6 style={{cursor:"pointer"}}
+                  <h6
+                    style={{ cursor: "pointer" }}
                     onClick={() => {
-                      data(ARTIST_SHORT_TERM,"Top Artists-Last 4 Week");
+                      data(ARTIST_SHORT_TERM, "Top Artists-Last 4 Week");
                     }}
                     className="dropdown-item"
                   >
@@ -134,9 +166,10 @@ export default function Nav() {
                   </h6>
                 </li>
                 <li>
-                  <h6 style={{cursor:"pointer"}}
+                  <h6
+                    style={{ cursor: "pointer" }}
                     onClick={() => {
-                      (data(ARTIST_MEDIUM_TERM,"Top Artists-Last 6 Month"));
+                      data(ARTIST_MEDIUM_TERM, "Top Artists-Last 6 Month");
                     }}
                     className="dropdown-item"
                   >
@@ -144,9 +177,10 @@ export default function Nav() {
                   </h6>
                 </li>
                 <li>
-                  <h6 style={{cursor:"pointer"}}
+                  <h6
+                    style={{ cursor: "pointer" }}
                     onClick={() => {
-                      data(ARTIST_LONG_TERM,"Top Artists-All Time");
+                      data(ARTIST_LONG_TERM, "Top Artists-All Time");
                     }}
                     className="dropdown-item"
                   >
@@ -160,6 +194,7 @@ export default function Nav() {
         {!isLoggedIn && (
           <Navbar.Item>
             <Button
+              disabled={pendingApiCall}
               onPress={requestAuthorization}
               auto
               flat
@@ -186,6 +221,7 @@ export default function Nav() {
         {isLoggedIn && (
           <Navbar.Item>
             <Button
+              disabled={pendingApiCall}
               onPress={onLogOutSuccess}
               auto
               flat

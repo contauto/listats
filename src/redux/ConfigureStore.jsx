@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import SecureLS from "secure-ls";
 import Reducer from "./Reducer";
-import { setAuthorizationHeader } from "../ApiRequests";
+import { setAuthorizationHeader } from "../functions/ApiRequests";
 import { originalState } from "./DefaultState";
 
 const secureLs = new SecureLS();

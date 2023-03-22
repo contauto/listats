@@ -12,11 +12,13 @@ import {
 } from "./Constants";
 import { useDispatch, useSelector } from "react-redux";
 import { loginHandler } from "./redux/Actions";
-import { useApiProgress } from "./PendingApiCall.jsx";
+import { useApiProgress } from "./functions/PendingApiCall.jsx";
 import { Card } from "./CardComponent";
-import { getBase64, getData, postData, putData } from "./ApiRequests";
+import { getBase64, getData, postData, putData } from "./functions/ApiRequests";
 import { Button } from "@mui/material";
-import TimeFormatter from "./TimeFormatter";
+import TimeFormatter from "./functions/TimeFormatter";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 export default function App() {
   const { isLoggedIn, data, text, userId,last } = useSelector((store) => ({
@@ -49,6 +51,8 @@ export default function App() {
   });
   const dispatch = useDispatch();
   const pendingApiCall = useApiProgress("get", base, false);
+
+  const successMessage=withReactContent(Swal)
 
   const createPlaylist = (body) => {
     const url = withUserId + userId + "/playlists";
@@ -159,7 +163,7 @@ export default function App() {
 
             {data && data.items[0].type === "track" && (
               <div className="mt-3 mb-5 text-center">
-                <Button
+                <Button disabled={pendingApiCall}
                   size="large"
                   color="secondary"
                   variant="contained"
@@ -169,6 +173,10 @@ export default function App() {
                     ).then((response) => {
                       updateCoverImage(response.data.id);
                       addSongs(data, response.data.id);
+                      successMessage.fire({
+                        title: <strong>Playlist Created!</strong>,
+                        icon: 'success'
+                      })
                     });
                   }}
                 >

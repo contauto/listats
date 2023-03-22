@@ -1,4 +1,4 @@
-import { auth, getData, setAuthorizationHeader } from "../ApiRequests";
+import { auth, getData, setAuthorizationHeader } from "../functions/ApiRequests";
 import {
   ME,
   REFRESH,
