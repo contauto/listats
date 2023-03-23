@@ -7,15 +7,14 @@ export const client_secret = process.env.REACT_APP_CLIENT_SECRET;
 export const REFRESH=()=>{
   const secureLs = new SecureLS();
   const listatsAuth = secureLs.get("listats-auth");
-  const refresh_token = listatsAuth.refresh_token;
-  return refresh_token
+  return listatsAuth.refresh_token
 }
 
 export const AUTHORIZE = () => {
   let url = "https://accounts.spotify.com/authorize";
   url += "?client_id=" + client_id;
   url += "&response_type=code";
-  url += "&redirect_uri=" + encodeURI(redirect_uri);
+  url += "&redirect_uri=" + (redirect_uri);
   url += "&show_dialog=true";
   url +=
     "&scope= ugc-image-upload user-top-read playlist-modify-private user-read-recently-played";
@@ -25,7 +24,7 @@ export const AUTHORIZE = () => {
 export const body = (code) => {
   let body = "grant_type=authorization_code";
   body += "&code=" + code;
-  body += "&redirect_uri=" + encodeURI(redirect_uri);
+  body += "&redirect_uri=" + (redirect_uri);
   body += "&client_id=" + client_id;
   body += "&client_secret=" + client_secret;
   return body;

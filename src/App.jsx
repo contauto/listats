@@ -1,8 +1,5 @@
-
-
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
-  TOKEN,
   addTrackLink,
   base,
   body,
@@ -10,14 +7,15 @@ import {
   client_secret,
   recently,
   redirect_uri,
+  TOKEN,
   withUserId,
 } from "./Constants";
-import { useDispatch, useSelector } from "react-redux";
-import { loginHandler } from "./redux/Actions";
-import { useApiProgress } from "./functions/PendingApiCall.jsx";
-import { Card } from "./CardComponent";
-import { getBase64, getData, postData, putData } from "./functions/ApiRequests";
-import { Button } from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+import {loginHandler} from "./redux/Actions";
+import {useApiProgress} from "./functions/PendingApiCall.jsx";
+import {Card} from "./components/ArtistCards";
+import {getBase64, getData, postData, putData} from "./functions/ApiRequests";
+import {Button} from "@mui/material";
 import TimeFormatter from "./functions/TimeFormatter";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -39,8 +37,7 @@ export default function App() {
 
 
   const playlistSpecs = (name, description) => {
-    const array = { name, description, public: false };
-    return array;
+    return {name, description, public: false};
   };
 
   useEffect(() => {
@@ -100,11 +97,9 @@ export default function App() {
         try {
           const login = async (code) => {
             try {
-              const response = await dispatch(
-                loginHandler(client_id, client_secret, TOKEN, body(code))
+              return await dispatch(
+                  loginHandler(client_id, client_secret, TOKEN, body(code))
               );
-
-              return response;
             } catch (error) {}
           };
           await login(code);

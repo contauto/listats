@@ -1,4 +1,4 @@
-import { React, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Navbar, Button, Link, Text, useTheme } from "@nextui-org/react";
 import {
   ARTIST_LONG_TERM,
@@ -12,12 +12,11 @@ import {
 } from "./Constants";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  dataHandler,
-  lastHandler,
   logoutSuccess,
   mainMenuSuccess,
 } from "./redux/Actions";
 import { useApiProgress } from "./functions/PendingApiCall";
+import DropdownItem from "./components/DropdownItem";
 
 export default function Nav() {
   const activeColor = "primary";
@@ -58,13 +57,6 @@ export default function Nav() {
     dispatch(logoutSuccess());
   };
 
-  const data = (url, text) => {
-    dispatch(dataHandler(url, text));
-  };
-
-  const last = (text) => {
-    dispatch(lastHandler(text));
-  };
 
   const pendingApiCall = useApiProgress("get", base, false);
   const trackRef = useRef(null);
@@ -133,48 +125,16 @@ export default function Nav() {
               </button>
               <ul className={trackDropDownClass}>
                 <li>
-                  <h6
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      data(TRACK_SHORT_TERM, "Top Tracks-Last 4 Week");
-                    }}
-                    className="dropdown-item"
-                  >
-                    4 Week
-                  </h6>
+                  <DropdownItem type="top" url={TRACK_SHORT_TERM} title="Top Tracks-Last 4 Week" name="4 Week"/>
                 </li>
                 <li>
-                  <h6
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      data(TRACK_MEDIUM_TERM, "Top Tracks-Last 6 Month");
-                    }}
-                    className="dropdown-item"
-                  >
-                    6 Month
-                  </h6>
+                  <DropdownItem type="top" url={TRACK_MEDIUM_TERM} title="Top Tracks-Last 6 Month" name="6 Month"/>
                 </li>
                 <li>
-                  <h6
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      data(TRACK_LONG_TERM, "Top Tracks-All Time");
-                    }}
-                    className="dropdown-item"
-                  >
-                    All Time
-                  </h6>
+                  <DropdownItem type="top" url={TRACK_LONG_TERM} title="Top Tracks-All Time" name="All Time"/>
                 </li>
                 <li>
-                  <h6
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      last("Last Played");
-                    }}
-                    className="dropdown-item"
-                  >
-                    Last Played
-                  </h6>
+                  <DropdownItem type="last" title="Last Played" name="Last Played"/>
                 </li>
               </ul>
             </div>
@@ -198,37 +158,13 @@ export default function Nav() {
               </button>
               <ul className={artistDropDownClass}>
                 <li>
-                  <h6
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      data(ARTIST_SHORT_TERM, "Top Artists-Last 4 Week");
-                    }}
-                    className="dropdown-item"
-                  >
-                    4 Week
-                  </h6>
+                  <DropdownItem type="top" url={ARTIST_SHORT_TERM} title="Top Artists-Last 4 Week" name="4 Week"/>
                 </li>
                 <li>
-                  <h6
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      data(ARTIST_MEDIUM_TERM, "Top Artists-Last 6 Month");
-                    }}
-                    className="dropdown-item"
-                  >
-                    6 Month
-                  </h6>
+                  <DropdownItem type="top" url={ARTIST_MEDIUM_TERM} title="Top Artists-Last 6 Month" name="6 Month"/>
                 </li>
                 <li>
-                  <h6
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      data(ARTIST_LONG_TERM, "Top Artists-All Time");
-                    }}
-                    className="dropdown-item"
-                  >
-                    All Time
-                  </h6>
+                  <DropdownItem type="top" url={ARTIST_LONG_TERM} title="Top Artists-All Time" name="All Time"/>
                 </li>
               </ul>
             </div>

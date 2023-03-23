@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Buffer } from "buffer";
+import {Buffer} from "buffer";
 
 export const getData = (url) => {
   return axios.get(url);
@@ -15,12 +15,11 @@ export const putData = (url, body) => {
 };
 
 export const getBase64 = async () => {
-  var axios = require("axios");
+  const axios = require("axios");
   let image = await axios.get("https://random.imagecdn.app/320/320", {
     responseType: "arraybuffer",
   });
-  let raw = Buffer.from(image.data).toString("base64");
-  return raw;
+  return Buffer.from(image.data).toString("base64");
 };
 
 export const auth = (client_id, client_secret, url, body) => {
