@@ -16,12 +16,12 @@ import {useApiProgress} from "./functions/PendingApiCall.jsx";
 import {Card} from "./components/ArtistCards";
 import {getBase64, getData, postData, putData} from "./functions/ApiRequests";
 import {Button} from "@mui/material";
-import TimeFormatter from "./functions/TimeFormatter";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import Title from "./components/Title";
 import Spinner from "./components/Spinner";
 import Track from "./components/Track";
+import LastTracks from "./components/LastTracks";
 
 export default function App() {
     const {isLoggedIn, data, text, userId, last} = useSelector((store) => ({
@@ -35,8 +35,6 @@ export default function App() {
         window.innerWidth,
         window.innerHeight,
     ]);
-
-    const width = windowSize[0]
 
 
     const playlistSpecs = (name, description) => {
@@ -70,6 +68,18 @@ export default function App() {
         await putData(url, image);
     };
 
+    const playlistCreateActions= async () => {
+        await createPlaylist(
+            playlistSpecs(text, "Powered by berkemaktav")
+        ).then((response) => {
+            updateCoverImage(response.data.id);
+            addSongs(data, response.data.id);
+            successMessage.fire({
+                title: <strong>Playlist Created!</strong>,
+                icon: 'success'
+            })
+        });
+    }
     const addSongs = (data, playlistId) => {
         let uris = [];
         let url = addTrackLink(playlistId);
@@ -143,18 +153,7 @@ export default function App() {
                                         size="large"
                                         color="secondary"
                                         variant="contained"
-                                        onClick={async () => {
-                                            await createPlaylist(
-                                                playlistSpecs(text, "Powered by berkemaktav")
-                                            ).then((response) => {
-                                                updateCoverImage(response.data.id);
-                                                addSongs(data, response.data.id);
-                                                successMessage.fire({
-                                                    title: <strong>Playlist Created!</strong>,
-                                                    icon: 'success'
-                                                })
-                                            });
-                                        }}
+                                        onClick={playlistCreateActions}
                                 >
                                     Playlist oluştur
                                 </Button>
@@ -168,40 +167,9 @@ export default function App() {
                 </div>
 
                 {last && last.map((item, id) => {
-                    return (
-                        <React.Fragment key={id}>
-
-                            <div key={id + 50}>
-                        <span className="bold" key={id + 100}>
-                          {id + 1 < 10 ? "0" + (id + 1) : id + 1}
-                        </span>
-                                <img
-                                    key={id + 150}
-                                    src={item.track.album.images[1].url}
-                                    className="img-thumbnail m-2 p-0"
-                                    alt="album-cover"
-                                    height={80}
-                                    width={80}
-                                ></img>
-
-                                <span className="bold text-center justify-content-center mt-4" key={id + 500}>
-                          {item.track.artists[0].name}-
-                        </span>
-
-                                <span className="bold" key={id + 200}>
-                          {width < 1000
-                              ? item.track.name.slice(0, 38)
-                              : item.track.name}
-                        </span>
-
-
-                                <span className="bold float-end mt-4" key={id + 250}>
-                          {TimeFormatter(item.played_at)}
-                        </span>
-                                <br/>
-                            </div>
-
-                        </React.Fragment>
+                    return (<div key={id}>
+                            <LastTracks id={id} item={item}/>
+                        </div>
                     );
                 })}
             </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 
 function Track(props) {
+    const {artists}=props.item
     return (
         <div key={props.id + 50}>
                         <span className="bold" key={props.id + 100}>
@@ -21,7 +22,7 @@ function Track(props) {
                         </span>
 
             <q className="bold float-end mt-4" key={props.id + 250}>
-                {props.item.artists[0].name}
+                {artists[0].name}
             </q>
             <br/>
         </div>
