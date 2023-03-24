@@ -10,7 +10,9 @@ const DropdownButton=React.forwardRef((props,ref)=>{
             onClick={onClick}
             ref={ref}
         >
-            {name}
+            {pendingApiCall ? (
+                <span className="spinner-border spinner-border-sm"></span>
+            ):name}
         </button>
     );
 }

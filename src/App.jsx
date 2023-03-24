@@ -53,7 +53,8 @@ export default function App() {
         };
     });
     const dispatch = useDispatch();
-    const pendingApiCall = useApiProgress("get", base, false);
+    const pendingGetCall = useApiProgress("get", base, false);
+    const pendingPostCall = useApiProgress("post", base, false);
 
     const successMessage = withReactContent(Swal)
 
@@ -133,7 +134,7 @@ export default function App() {
                         {isLoggedIn && (data || last) && (
                             <Title text={text}/>
                         )}
-                        {pendingApiCall && (!data || !last) && (
+                        {pendingGetCall && (!data && !last) && (
                             <Spinner/>
                         )}
                         {data &&
@@ -149,13 +150,13 @@ export default function App() {
 
                         {data && data[0].type === "track" && (
                             <div className="mt-3 mb-5 text-center">
-                                <Button disabled={pendingApiCall}
+                                <Button disabled={pendingGetCall}
                                         size="large"
                                         color="secondary"
                                         variant="contained"
                                         onClick={playlistCreateActions}
                                 >
-                                    Playlist oluştur
+                                    {(pendingGetCall||pendingPostCall)?<span className="spinner-border spinner-border-sm"></span>:"Playlist oluştur"}
                                 </Button>
                             </div>
                         )}
