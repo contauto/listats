@@ -83,8 +83,8 @@ export default function App() {
     const addSongs = (data, playlistId) => {
         let uris = [];
         let url = addTrackLink(playlistId);
-        for (let index = 0; index < data.items.length; index++) {
-            const track = data.items[index].uri;
+        for (let index = 0; index < data.length; index++) {
+            const track = data[index].uri;
             uris.push(track);
         }
         const json = {uris, position: 0};
