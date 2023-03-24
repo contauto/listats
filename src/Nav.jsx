@@ -118,12 +118,12 @@ export default function Nav() {
                             }} pendingApiCall={pendingApiCall} name="Track"/>
                             <ul className={trackDropDownClass}>
                                 <li>
-                                    <DropdownItem type="top" url={TRACK_SHORT_TERM} title="Top Tracks-Last 4 Week"
-                                                  name="4 Week"/>
+                                    <DropdownItem type="top" url={TRACK_SHORT_TERM} title="Top Tracks-Last 4 Weeks"
+                                                  name="4 Weeks"/>
                                 </li>
                                 <li>
-                                    <DropdownItem type="top" url={TRACK_MEDIUM_TERM} title="Top Tracks-Last 6 Month"
-                                                  name="6 Month"/>
+                                    <DropdownItem type="top" url={TRACK_MEDIUM_TERM} title="Top Tracks-Last 6 Months"
+                                                  name="6 Months"/>
                                 </li>
                                 <li>
                                     <DropdownItem type="top" url={TRACK_LONG_TERM} title="Top Tracks-All Time"
@@ -147,12 +147,12 @@ export default function Nav() {
                             }} pendingApiCall={pendingApiCall} name="Artist"/>
                             <ul className={artistDropDownClass}>
                                 <li>
-                                    <DropdownItem type="top" url={ARTIST_SHORT_TERM} title="Top Artists-Last 4 Week"
-                                                  name="4 Week"/>
+                                    <DropdownItem type="top" url={ARTIST_SHORT_TERM} title="Top Artists-Last 4 Weeks"
+                                                  name="4 Weeks"/>
                                 </li>
                                 <li>
-                                    <DropdownItem type="top" url={ARTIST_MEDIUM_TERM} title="Top Artists-Last 6 Month"
-                                                  name="6 Month"/>
+                                    <DropdownItem type="top" url={ARTIST_MEDIUM_TERM} title="Top Artists-Last 6 Months"
+                                                  name="6 Months"/>
                                 </li>
                                 <li>
                                     <DropdownItem type="top" url={ARTIST_LONG_TERM} title="Top Artists-All Time"
