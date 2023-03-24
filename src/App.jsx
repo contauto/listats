@@ -71,7 +71,7 @@ export default function App() {
 
     const playlistCreateActions= async () => {
         await createPlaylist(
-            playlistSpecs(text, "Powered by berkemaktav")
+            playlistSpecs(text, "Powered by Listats, listats.netlify.app")
         ).then((response) => {
             updateCoverImage(response.data.id);
             addSongs(data, response.data.id);
@@ -156,7 +156,7 @@ export default function App() {
                                         variant="contained"
                                         onClick={playlistCreateActions}
                                 >
-                                    {(pendingGetCall||pendingPostCall)?<span className="spinner-border spinner-border-sm"></span>:"Playlist oluştur"}
+                                    {(pendingGetCall||pendingPostCall)?<span className="spinner-border spinner-border-sm"></span>:"Create Playlist"}
                                 </Button>
                             </div>
                         )}
