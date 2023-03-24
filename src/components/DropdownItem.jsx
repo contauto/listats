@@ -1,6 +1,7 @@
 import React from 'react';
 import {useDispatch} from "react-redux";
-import {dataHandler, lastHandler} from "../redux/Actions";
+import {dataHandler} from "../redux/Actions";
+import {recently} from "../Constants";
 
 function DropdownItem(props) {
     const dispatch = useDispatch()
@@ -9,7 +10,7 @@ function DropdownItem(props) {
     };
 
     const last = (text) => {
-        dispatch(lastHandler(text));
+        dispatch(dataHandler(recently,text));
     };
 
 

@@ -137,7 +137,7 @@ export default function App() {
                             <Spinner/>
                         )}
                         {data &&
-                            data.items.map((item, id) => {
+                            data.map((item, id) => {
                                 return (
                                     <div key={id}>
                                         {item.type === "track" && (
@@ -147,7 +147,7 @@ export default function App() {
                                 );
                             })}
 
-                        {data && data.items[0].type === "track" && (
+                        {data && data[0].type === "track" && (
                             <div className="mt-3 mb-5 text-center">
                                 <Button disabled={pendingApiCall}
                                         size="large"
@@ -160,8 +160,8 @@ export default function App() {
                             </div>
                         )}
 
-                        {data && data.items[0].type === "artist" && (
-                            <Card screenSize={windowSize} items={data.items}/>
+                        {data && data[0].type === "artist" && (
+                            <Card screenSize={windowSize} items={data}/>
                         )}
                     </div>
                 </div>

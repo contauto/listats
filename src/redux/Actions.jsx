@@ -5,7 +5,6 @@ import {
   TOKEN,
   client_id,
   client_secret,
-  recently,
   refreshBody,
 } from "../Constants";
 import * as ACTIONS from "./Constants";
@@ -66,50 +65,32 @@ export const dataHandler = (url, text) => {
   return async function (dispatch) {
     await getData(url)
       .then((response) => {
-        console.log(response)
+        const {limit,items}=response.data
         const storedData = {
-          data: response.data,
-          last: undefined,
+          last: limit===20?items:undefined,
+          data: limit===50?items:undefined,
           text,
         };
-
+    console.log(storedData)
         dispatch(dataSuccess(storedData));
         return response;
       })
       .catch(async (error) => {
         if (error.response.status === 401) {
-          await after401(text,dispatch)
+          await after401(text,dispatch,url)
         }
       });
   };
 };
 
-export const lastHandler = (text) => {
-  return async function (dispatch) {
-    await getData(recently)
-      .then((response) => {
-        const storedData = {
-          last: response.data.items,
-          text,
-          data: undefined,
-        };
-        dispatch(dataSuccess(storedData));
-        return response;
-      })
-      .catch(async (error) => {
-        if (error.response.status === 401) {
-         await after401(text,dispatch)
-        }
-      });
-  };
-};
 
-export const after401=async(text,dispatch)=>{
+
+export const after401=async(text,dispatch,url)=>{
   try {
     await dispatch(
         loginHandler(client_id, client_secret, TOKEN, refreshBody())
     );
-    await getData(recently).then((response) => {
+    await getData(url).then((response) => {
      const {limit,items}=response.data
       const storedData = {
         last: limit===20?items:undefined,
