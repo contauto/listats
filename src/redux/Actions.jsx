@@ -66,6 +66,7 @@ export const dataHandler = (url, text) => {
   return async function (dispatch) {
     await getData(url)
       .then((response) => {
+        console.log(response)
         const storedData = {
           data: response.data,
           last: undefined,
@@ -77,21 +78,7 @@ export const dataHandler = (url, text) => {
       })
       .catch(async (error) => {
         if (error.response.status === 401) {
-          try {
-            await dispatch(
-              loginHandler(client_id, client_secret, TOKEN, refreshBody())
-            );
-            await getData(url).then((response) => {
-              const storedData = {
-                data: response.data,
-                text,
-                last: undefined,
-              };
-
-              dispatch(dataSuccess(storedData));
-              return response;
-            });
-          } catch {}
+          await after401(text,dispatch)
         }
       });
   };
@@ -111,23 +98,27 @@ export const lastHandler = (text) => {
       })
       .catch(async (error) => {
         if (error.response.status === 401) {
-          try {
-            await dispatch(
-              loginHandler(client_id, client_secret, TOKEN, refreshBody())
-            );
-            await getData(recently).then((response) => {
-              const storedData = {
-                last: response.data.items,
-                data: undefined,
-                text,
-              };
-
-              dispatch(dataSuccess(storedData));
-              return response;
-            });
-          } catch {}
+         await after401(text,dispatch)
         }
       });
   };
 };
 
+export const after401=async(text,dispatch)=>{
+  try {
+    await dispatch(
+        loginHandler(client_id, client_secret, TOKEN, refreshBody())
+    );
+    await getData(recently).then((response) => {
+     const {limit,items}=response.data
+      const storedData = {
+        last: limit===20?items:undefined,
+        data: limit===50?items:undefined,
+        text,
+      };
+
+      dispatch(dataSuccess(storedData));
+      return response;
+    });
+  } catch {}
+}
