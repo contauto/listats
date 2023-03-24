@@ -13,7 +13,7 @@ const getStateFromStorage = () => {
   let stateInLocalStorage = originalState
 
   if (listatsAuth) {
-    return listatsAuth;
+    return {...listatsAuth,last:undefined,data:undefined};
   }
   return stateInLocalStorage;
 };

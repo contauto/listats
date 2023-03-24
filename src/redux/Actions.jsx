@@ -54,7 +54,7 @@ export const loginHandler = (client_id, client_secret, url, body) => {
             refresh_token,
             display_name: me.data.display_name,
             image: me.data.images[0].url,
-            userId: me.data.id,
+            userId: me.data.id
         };
         dispatch(loginSuccess(authState));
         return {response, me};
