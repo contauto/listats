@@ -31,7 +31,7 @@ function LastTracks(props) {
 
       <span className="bold" key={props.id + 200}>
         {props.width < 1000
-          ? props.item.track.name.slice(0, 38)
+          ? props.item.track.name.slice(0, 30)
           : props.item.track.name}
       </span>
 
