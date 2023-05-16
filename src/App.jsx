@@ -170,7 +170,7 @@ export default function App() {
 
                 {last && last.map((item, id) => {
                     return (<div key={id}>
-                            <LastTracks id={id} item={item}/>
+                            <LastTracks width={window.innerWidth} id={id} item={item}/>
                         </div>
                     );
                 })}

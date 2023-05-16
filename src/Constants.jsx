@@ -67,3 +67,5 @@ export const withUserId="https://api.spotify.com/v1/users/"
 export const recently=base+"/v1/me/player/recently-played"
 
 export const addTrackLink=(playlistId)=>{return base+"/v1/playlists/"+playlistId+"/tracks"}
+
+export const githubUrl="https://github.com/contauto/listats/blob/master/README.md"
