@@ -65,9 +65,10 @@ export default function App() {
 
     const updateCoverImage = async (playlistId) => {
         const url = base + "/v1/playlists/" + playlistId + "/images";
-        const image = await getBase64();
-        await putData(url, image);
+        const response = await getBase64();
+        await putData(url, response);
     };
+
 
     const playlistCreateActions= async () => {
         await createPlaylist(

@@ -4,6 +4,10 @@ export const redirect_uri = process.env.REACT_APP_REDIRECT_URI;
 export const client_id = process.env.REACT_APP_CLIENT_ID;
 export const client_secret = process.env.REACT_APP_CLIENT_SECRET;
 
+export const unsplash_access_key = process.env.REACT_APP_UNSPLASH_ACCESS_KEY;
+
+export const unsplashRandomImageUrl="https://api.unsplash.com/photos/random"
+
 export const REFRESH=()=>{
   const secureLs = new SecureLS();
   const listatsAuth = secureLs.get("listats-auth");

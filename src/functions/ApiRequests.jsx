@@ -1,5 +1,6 @@
 import axios from "axios";
 import {Buffer} from "buffer";
+import {unsplash_access_key, unsplashRandomImageUrl} from "../Constants";
 
 export const getData = (url) => {
   return axios.get(url);
@@ -14,12 +15,28 @@ export const putData = (url, body) => {
   return axios.put(url, body);
 };
 
-export const getBase64 = async () => {
-  const axios = require("axios");
-  let image = await axios.get("https://random.imagecdn.app/320/320", {
-    responseType: "arraybuffer",
+export const getImageUrl = async () => {
+  const response = await axios.get(unsplashRandomImageUrl, {
+    headers: {
+      Authorization: `Client-ID ${unsplash_access_key}`
+    }
   });
-  return Buffer.from(image.data).toString("base64");
+  return response.data.urls.small_s3;
+}
+export const getBase64 = async () => {
+    return await getImageUrl().then((response) => {
+        return axios
+            .get(response, {
+                responseType: "arraybuffer",
+                headers: {
+                    "Content-Type": "image/jpeg",
+                    Authorization: "",
+                },
+            })
+            .then((response) => {
+                return Buffer.from(response.data, "binary").toString("base64");
+            });
+    });
 };
 
 export const auth = (client_id, client_secret, url, body) => {
@@ -39,3 +56,7 @@ export const setAuthorizationHeader = ({ isLoggedIn, access_token }) => {
     delete axios.defaults.headers["Authorization"];
   }
 };
+
+export const getWithBody=(url,body)=>{
+  return axios.get(url,body)
+}
