@@ -221,17 +221,35 @@ export default function App() {
 
                 <div className="last-tracks-container">
                     <AnimatePresence>
-                        {last && last.map((item, id) => (
-                            <motion.div 
-                                key={id}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
+                        {last && (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                transition={{ delay: id * 0.1 }}
+                                className="glass-container"
                             >
-                                <LastTracks width={window.innerWidth} id={id} item={item}/>
+                                {last.map((item, id) => (
+                                    <motion.div 
+                                        key={id}
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ 
+                                            delay: id * 0.1,
+                                            type: "spring",
+                                            stiffness: 100,
+                                            damping: 20
+                                        }}
+                                    >
+                                        <LastTracks 
+                                            width={window.innerWidth} 
+                                            id={id} 
+                                            item={item}
+                                        />
+                                    </motion.div>
+                                ))}
                             </motion.div>
-                        ))}
+                        )}
                     </AnimatePresence>
                 </div>
             </div>

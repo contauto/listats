@@ -1,0 +1,139 @@
+.last-track-container {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin: 0.8rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.last-track-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.last-track-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.track-number {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+    min-width: 2rem;
+}
+
+.track-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.track-image:hover {
+    transform: scale(1.05);
+}
+
+.track-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.track-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.track-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #000000;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.track-artist {
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.track-metadata {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #000000;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.metadata-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.icon {
+    font-size: 1rem;
+    color: #000000;
+}
+
+@media (max-width: 768px) {
+    .last-track-container {
+        padding: 1rem;
+        margin: 0.6rem 0;
+    }
+
+    .track-image {
+        width: 60px;
+        height: 60px;
+    }
+
+    .track-name {
+        font-size: 1rem;
+    }
+
+    .track-artist {
+        font-size: 0.85rem;
+    }
+
+    .track-metadata {
+        font-size: 0.75rem;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .last-track-container {
+        padding: 0.8rem;
+    }
+
+    .track-number {
+        font-size: 1rem;
+        min-width: 1.5rem;
+    }
+
+    .track-image {
+        width: 50px;
+        height: 50px;
+    }
+
+    .track-name {
+        font-size: 0.9rem;
+    }
+
+    .track-artist {
+        font-size: 0.8rem;
+    }
+} 

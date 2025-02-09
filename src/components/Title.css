@@ -1,78 +1,40 @@
 .title-container {
-    width: 100%;
-    padding: 1.5rem 1rem;
-    margin-bottom: 1.5rem;
+    padding: clamp(0.8rem, 2vw, 1rem);
+    margin-bottom: 1rem;
     text-align: center;
-    position: relative;
 }
 
 .title-text {
-    font-size: 2.5rem;
-    font-weight: 800;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-weight: 700;
     color: #ffffff;
-    margin: 0;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    position: relative;
-    display: inline-block;
-}
-
-.title-highlight {
-    position: relative;
-    z-index: 1;
-    padding: 0.3em 0.6em;
+    padding: 0.4em 0.8em;
     background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.1);
     display: inline-block;
-    max-width: 100%;
+    max-width: 90%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    position: relative;
 }
 
 .title-text::after {
     content: '';
     position: absolute;
-    bottom: -3px;
+    bottom: -2px;
     left: 0;
     width: 100%;
-    height: 3px;
+    height: 2px;
     background: rgba(255, 255, 255, 0.2);
-    border-radius: 2px;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .title-container {
-        padding: 1.2rem 0.5rem;
-        margin-bottom: 1.2rem;
-    }
-
-    .title-text {
-        font-size: 2rem;
-    }
-
-    .title-highlight {
-        padding: 0.25em 0.5em;
-    }
+    border-radius: 1px;
 }
 
 @media (max-width: 480px) {
-    .title-container {
-        padding: 1rem 0.5rem;
-        margin-bottom: 1rem;
-    }
-
     .title-text {
-        font-size: 1.5rem;
         line-height: 1.3;
+        padding: 0.3em 0.6em;
     }
-
-    .title-highlight {
-        padding: 0.2em 0.4em;
-        max-width: 90vw;
-    }
-} 
+}

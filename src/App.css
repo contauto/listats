@@ -195,3 +195,15 @@
     animation: pulse 1.5s infinite ease-in-out;
 }
 
+.last-tracks-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+    .last-tracks-container {
+        margin: 1.5rem auto;
+    }
+}
+
