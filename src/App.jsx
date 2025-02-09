@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
+import {motion, AnimatePresence} from "framer-motion";
 import {
     addTrackLink,
     base,
@@ -13,7 +14,6 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import {loginHandler} from "./redux/Actions";
 import {useApiProgress} from "./functions/PendingApiCall.jsx";
-import {Card} from "./components/ArtistCards";
 import {getBase64, getData, postData, putData} from "./functions/ApiRequests";
 import {Button} from "@mui/material";
 import Swal from 'sweetalert2'
@@ -22,6 +22,7 @@ import Title from "./components/Title";
 import Spinner from "./components/Spinner";
 import Track from "./components/Track";
 import LastTracks from "./components/LastTracks";
+import Artist from "./components/Artist";
 
 export default function App() {
     const {isLoggedIn, data, text, userId, last} = useSelector((store) => ({
@@ -31,32 +32,15 @@ export default function App() {
         userId: store.userId,
         last: store.last
     }));
-    const [windowSize, setWindowSize] = useState([
-        window.innerWidth,
-        window.innerHeight,
-    ]);
-
-
-    const playlistSpecs = (name, description) => {
-        return {name, description, public: false};
-    };
-
-    useEffect(() => {
-        const handleWindowResize = () => {
-            setWindowSize([window.innerWidth, window.innerHeight]);
-        };
-
-        window.addEventListener("resize", handleWindowResize);
-
-        return () => {
-            window.removeEventListener("resize", handleWindowResize);
-        };
-    });
     const dispatch = useDispatch();
     const pendingGetCall = useApiProgress("get", base, false);
     const pendingPostCall = useApiProgress("post", base, false);
 
     const successMessage = withReactContent(Swal)
+
+    const playlistSpecs = (name, description) => {
+        return {name, description, public: false};
+    };
 
     const createPlaylist = (body) => {
         const url = withUserId + userId + "/playlists";
@@ -68,7 +52,6 @@ export default function App() {
         const response = await getBase64();
         await putData(url, response);
     };
-
 
     const playlistCreateActions= async () => {
         await createPlaylist(
@@ -127,54 +110,131 @@ export default function App() {
         }
     }, [dispatch, data]);
 
+    const fadeInVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 }
+    };
+
     return (
-        <div>
+        <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={fadeInVariants}
+            transition={{ duration: 0.5 }}
+        >
             <div className="container mt-4">
                 <div className="row">
                     <div>
-                        {isLoggedIn && (data || last) && (
-                            <Title text={text}/>
-                        )}
+                        <AnimatePresence>
+                            {isLoggedIn && (data || last) && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0 }}
+                                >
+                                    <Title text={text}/>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
                         {pendingGetCall && (!data && !last) && (
                             <Spinner/>
                         )}
-                        {data &&
-                            data.map((item, id) => {
-                                return (
-                                    <div key={id}>
+
+                        <div className="tracks-grid">
+                            <AnimatePresence>
+                                {data && data.map((item, id) => (
+                                    <motion.div 
+                                        key={id}
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.9 }}
+                                        transition={{ delay: id * 0.1 }}
+                                        className="track-item"
+                                    >
                                         {item.type === "track" && (
                                             <Track id={id} item={item} width="80" height="80"/>
                                         )}
-                                    </div>
-                                );
-                            })}
+                                    </motion.div>
+                                ))}
+                            </AnimatePresence>
+                        </div>
 
-                        {data && data[0].type === "track" && (
-                            <div className="mt-3 mb-5 text-center">
-                                <Button disabled={pendingGetCall}
-                                        size="large"
-                                        color="secondary"
-                                        variant="contained"
-                                        onClick={playlistCreateActions}
+                        <AnimatePresence>
+                            {data && data[0]?.type === "track" && (
+                                <motion.div 
+                                    className="mt-3 mb-5 text-center"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{
+                                        duration: 0.3,
+                                        type: "spring",
+                                        stiffness: 100
+                                    }}
                                 >
-                                    {(pendingGetCall||pendingPostCall)?<span className="spinner-border spinner-border-sm"></span>:"Create Playlist"}
-                                </Button>
-                            </div>
-                        )}
+                                    <Button 
+                                        disabled={pendingGetCall}
+                                        onClick={playlistCreateActions}
+                                        className="create-playlist-btn"
+                                        variant="contained"
+                                        sx={{
+                                            background: 'linear-gradient(135deg, #1a1a1a 0%, #333333 100%)',
+                                            '&:hover': {
+                                                background: 'linear-gradient(135deg, #333333 0%, #1a1a1a 100%)',
+                                            }
+                                        }}
+                                    >
+                                        {(pendingGetCall||pendingPostCall) ? (
+                                            <>
+                                                <span className="spinner-border"></span>
+                                                Creating...
+                                            </>
+                                        ) : (
+                                            "Create Playlist"
+                                        )}
+                                    </Button>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
-                        {data && data[0].type === "artist" && (
-                            <Card screenSize={windowSize} items={data}/>
-                        )}
+                        <AnimatePresence>
+                            {data && data[0]?.type === "artist" && (
+                                <motion.div
+                                    className="artists-grid"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                >
+                                    {data.map((artist, index) => (
+                                        <Artist 
+                                            key={artist.id} 
+                                            artist={artist} 
+                                            index={index}
+                                        />
+                                    ))}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
                 </div>
 
-                {last && last.map((item, id) => {
-                    return (<div key={id}>
-                            <LastTracks width={window.innerWidth} id={id} item={item}/>
-                        </div>
-                    );
-                })}
+                <div className="last-tracks-container">
+                    <AnimatePresence>
+                        {last && last.map((item, id) => (
+                            <motion.div 
+                                key={id}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ delay: id * 0.1 }}
+                            >
+                                <LastTracks width={window.innerWidth} id={id} item={item}/>
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
+                </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
