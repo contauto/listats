@@ -12,6 +12,10 @@ function Track(props) {
         return `${text.substring(0, maxLength)}...`;
     };
 
+    const openInSpotify = () => {
+        window.open(props.item.external_urls.spotify, '_blank');
+    };
+
     return (
         <motion.div 
             className="track-container"
@@ -23,6 +27,8 @@ function Track(props) {
                 type: "spring",
                 stiffness: 100 
             }}
+            onClick={openInSpotify}
+            style={{ cursor: 'pointer' }}
         >
             <div className="track-content">
                 <span className="track-number">

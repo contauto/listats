@@ -4,6 +4,10 @@ import Tooltip from '@mui/material/Tooltip';
 import './Artist.css';
 
 function Artist({ artist, index }) {
+    const openInSpotify = () => {
+        window.open(artist.external_urls.spotify, '_blank');
+    };
+
     return (
         <motion.div 
             className="artist-card"
@@ -20,6 +24,8 @@ function Artist({ artist, index }) {
                 scale: 1.02,
                 transition: { duration: 0.2 }
             }}
+            onClick={openInSpotify}
+            style={{ cursor: 'pointer' }}
         >
             <div className="artist-rank">{index + 1}</div>
             <div className="artist-image-container">

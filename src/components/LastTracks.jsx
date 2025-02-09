@@ -15,11 +15,17 @@ function LastTracks({ item, id, width }) {
         return `${text.substring(0, maxLength)}...`;
     };
 
+    const openInSpotify = () => {
+        window.open(item.track.external_urls.spotify, '_blank');
+    };
+
     return (
         <motion.div 
             className="last-track-container"
             whileHover={{ scale: 1.01 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            onClick={openInSpotify}
+            style={{ cursor: 'pointer' }}
         >
             <div className="last-track-content">
                 <span className="track-number">
