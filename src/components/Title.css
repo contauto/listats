@@ -1,10 +1,15 @@
 .section-heading {
-    font-size: 1.75rem;
+    font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+    font-size: 1.85rem;
     font-weight: 700;
     color: var(--text-primary);
     text-align: center;
     margin: 1.5rem 0;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 @media (max-width: 768px) {

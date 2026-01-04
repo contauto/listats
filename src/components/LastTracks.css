@@ -117,7 +117,21 @@
     }
 
     .last-track-meta {
+        flex-direction: row;
+        gap: 0.4rem;
+        align-items: center;
+    }
+
+    .meta-date {
         display: none;
+    }
+
+    .meta-time {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+        background: var(--bg-tertiary);
+        border-radius: var(--radius-sm);
+        white-space: nowrap;
     }
 
     .last-track-rank {
