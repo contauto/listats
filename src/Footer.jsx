@@ -1,10 +1,23 @@
-import React from "react";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import './Footer.css';
 
-export default function Footer() {
+function Footer() {
+  const { t } = useTranslation();
+
   return (
-    <div className="mt-5">
-      <footer>
-      </footer>
-    </div>
+    <footer className="app-footer">
+      <div className="footer-content">
+        <p className="footer-credit">
+          {t('footer.madeWith')} ❤️ {t('footer.by')}{' '}
+          <a href="https://berkemaktav.com" target="_blank" rel="noopener noreferrer">
+            berkemaktav
+          </a>
+        </p>
+        <p className="footer-powered">{t('footer.poweredBy')}</p>
+      </div>
+    </footer>
   );
 }
+
+export default Footer;

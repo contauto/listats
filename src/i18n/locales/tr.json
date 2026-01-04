@@ -1,0 +1,54 @@
+{
+    "common": {
+        "login": "Spotify ile Giriş Yap",
+        "logout": "Çıkış Yap",
+        "settings": "Ayarlar",
+        "loading": "Yükleniyor...",
+        "creating": "Oluşturuluyor...",
+        "createPlaylist": "Playlist Oluştur",
+        "playlistCreated": "Playlist Oluşturuldu!",
+        "tracks": "Şarkılar",
+        "artists": "Sanatçılar",
+        "recommendations": "Öneriler",
+        "lastPlayed": "Son Çalınanlar",
+        "followers": "takipçi"
+    },
+    "timeRanges": {
+        "shortTerm": "4 Hafta",
+        "mediumTerm": "6 Ay",
+        "longTerm": "Tüm Zamanlar"
+    },
+    "titles": {
+        "topTracks4Weeks": "En Çok Dinlenen Şarkılar - Son 4 Hafta",
+        "topTracks6Months": "En Çok Dinlenen Şarkılar - Son 6 Ay",
+        "topTracksAllTime": "En Çok Dinlenen Şarkılar - Tüm Zamanlar",
+        "topArtists4Weeks": "En Çok Dinlenen Sanatçılar - Son 4 Hafta",
+        "topArtists6Months": "En Çok Dinlenen Sanatçılar - Son 6 Ay",
+        "topArtistsAllTime": "En Çok Dinlenen Sanatçılar - Tüm Zamanlar",
+        "lastPlayed": "Son Çalınanlar",
+        "suggestedForYou": "Senin İçin Öneriler"
+    },
+    "settings": {
+        "title": "Ayarlar",
+        "darkMode": "Karanlık Mod",
+        "language": "Dil",
+        "english": "English",
+        "turkish": "Türkçe"
+    },
+    "recommendations": {
+        "title": "Playlist Önerileri",
+        "description": "Favori şarkılarına göre",
+        "basedOn": "En sevdiğin şarkılara göre",
+        "createFromSuggestions": "Önerilerden Playlist Oluştur",
+        "refresh": "Önerileri Yenile"
+    },
+    "footer": {
+        "madeWith": "Sevgiyle yapıldı",
+        "by": "tarafından",
+        "poweredBy": "Spotify API ile güçlendirildi"
+    },
+    "errors": {
+        "loginFailed": "Giriş başarısız. Lütfen tekrar deneyin.",
+        "loadFailed": "Veriler yüklenemedi. Lütfen sayfayı yenileyin."
+    }
+}

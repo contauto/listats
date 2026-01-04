@@ -1,78 +1,38 @@
 import React from 'react';
-import {motion} from 'framer-motion';
-import Tooltip from '@mui/material/Tooltip';
+import { motion } from 'framer-motion';
 import './Track.css';
 
-function Track(props) {
-    const {artists} = props.item;
+function Track({ id, item }) {
+    const { artists, album, name, external_urls } = item;
 
-    // Function to truncate text
-    const truncateText = (text, maxLength) => {
-        if (text.length <= maxLength) return text;
-        return `${text.substring(0, maxLength)}...`;
-    };
+    const truncate = (text, max) => text.length <= max ? text : `${text.substring(0, max)}...`;
 
-    const openInSpotify = () => {
-        window.open(props.item.external_urls.spotify, '_blank');
-    };
+    const openSpotify = () => window.open(external_urls.spotify, '_blank');
 
     return (
-        <motion.div 
-            className="track-container"
-            whileHover={{ scale: 1.02, y: -5 }}
+        <motion.div
+            className="track-card"
+            whileHover={{ y: -4, scale: 1.01 }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ 
-                duration: 0.3,
-                type: "spring",
-                stiffness: 100 
-            }}
-            onClick={openInSpotify}
-            style={{ cursor: 'pointer' }}
+            transition={{ duration: 0.3, delay: id * 0.05 }}
+            onClick={openSpotify}
         >
-            <div className="track-content">
-                <span className="track-number">
-                    {props.id + 1 < 10 ? `0${props.id + 1}` : props.id + 1}
-                </span>
-                
-                <motion.div className="image-container">
-                    <motion.img
-                        src={props.item.album.images[1].url}
-                        className="track-image"
-                        alt="album-cover"
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ duration: 0.2 }}
-                    />
-                    <motion.div 
-                        className="image-overlay"
-                        initial={{ opacity: 0 }}
-                        whileHover={{ opacity: 1 }}
-                    />
-                </motion.div>
+            <span className="track-rank">{String(id + 1).padStart(2, '0')}</span>
 
-                <div className="track-info">
-                    <div className="track-text">
-                        <Tooltip title={props.item.name} placement="top">
-                            <h3 className="track-name truncate-text">
-                                {truncateText(props.item.name, window.innerWidth < 768 ? 25 : 40)}
-                            </h3>
-                        </Tooltip>
-
-                        <Tooltip title={artists.map(artist => artist.name).join(', ')} placement="bottom">
-                            <p className="track-artist truncate-text">
-                                {truncateText(artists.map(artist => artist.name).join(', '), 
-                                    window.innerWidth < 768 ? 20 : 35)}
-                            </p>
-                        </Tooltip>
-                    </div>
-                    {props.item.album.name && (
-                        <Tooltip title={props.item.album.name} placement="bottom">
-                            <p className="track-album truncate-text">
-                                {truncateText(props.item.album.name, window.innerWidth < 768 ? 20 : 35)}
-                            </p>
-                        </Tooltip>
-                    )}
+            <div className="track-image-wrap">
+                <img src={album.images[1]?.url} alt={album.name} className="track-image" />
+                <div className="track-play-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
                 </div>
+            </div>
+
+            <div className="track-info">
+                <h3 className="track-title">{truncate(name, 35)}</h3>
+                <p className="track-artist">{truncate(artists.map(a => a.name).join(', '), 30)}</p>
+                <p className="track-album">{truncate(album.name, 30)}</p>
             </div>
         </motion.div>
     );

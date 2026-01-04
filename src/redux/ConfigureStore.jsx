@@ -1,37 +1,32 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
-import SecureLS from "secure-ls";
-import Reducer from "./Reducer";
-import { setAuthorizationHeader } from "../functions/ApiRequests";
-import { originalState } from "./DefaultState";
+import { configureStore as createStore } from '@reduxjs/toolkit';
+import SecureLS from 'secure-ls';
+import Reducer from './Reducer';
+import { setAuthorizationHeader } from '../functions/ApiRequests';
+import { originalState } from './DefaultState';
 
 const secureLs = new SecureLS();
 
 const getStateFromStorage = () => {
-  const listatsAuth = secureLs.get("listats-auth");
-
-  let stateInLocalStorage = originalState
-
+  const listatsAuth = secureLs.get('listats-auth');
   if (listatsAuth) {
-    return {...listatsAuth,last:undefined,data:undefined};
+    return { ...listatsAuth, last: undefined, data: undefined };
   }
-  return stateInLocalStorage;
+  return originalState;
 };
 
 const updateStateInStorage = (newState) => {
-  secureLs.set("listats-auth", newState);
+  secureLs.set('listats-auth', newState);
 };
 
 const configureStore = () => {
   const initialState = getStateFromStorage();
   setAuthorizationHeader(initialState);
-  const composeEnhancers =
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  const store = createStore(
-    Reducer,
-    initialState,
-    composeEnhancers(applyMiddleware(thunk))
-  );
+
+  const store = createStore({
+    reducer: Reducer,
+    preloadedState: initialState,
+    devTools: process.env.NODE_ENV !== 'production'
+  });
 
   store.subscribe(() => {
     updateStateInStorage(store.getState());

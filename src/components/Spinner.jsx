@@ -1,12 +1,15 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import './Spinner.css';
 
 function Spinner() {
     return (
-        <div
-            className="spinner-border position-absolute top-50 start-50"
-            role="status"
-        >
-            <span className="visually-hidden">Loading...</span>
+        <div className="spinner-container">
+            <motion.div
+                className="spinner-ring"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+            />
         </div>
     );
 }

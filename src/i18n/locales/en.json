@@ -1,0 +1,54 @@
+{
+    "common": {
+        "login": "Login with Spotify",
+        "logout": "Logout",
+        "settings": "Settings",
+        "loading": "Loading...",
+        "creating": "Creating...",
+        "createPlaylist": "Create Playlist",
+        "playlistCreated": "Playlist Created!",
+        "tracks": "Tracks",
+        "artists": "Artists",
+        "recommendations": "Recommendations",
+        "lastPlayed": "Last Played",
+        "followers": "followers"
+    },
+    "timeRanges": {
+        "shortTerm": "4 Weeks",
+        "mediumTerm": "6 Months",
+        "longTerm": "All Time"
+    },
+    "titles": {
+        "topTracks4Weeks": "Top Tracks - Last 4 Weeks",
+        "topTracks6Months": "Top Tracks - Last 6 Months",
+        "topTracksAllTime": "Top Tracks - All Time",
+        "topArtists4Weeks": "Top Artists - Last 4 Weeks",
+        "topArtists6Months": "Top Artists - Last 6 Months",
+        "topArtistsAllTime": "Top Artists - All Time",
+        "lastPlayed": "Last Played",
+        "suggestedForYou": "Suggested For You"
+    },
+    "settings": {
+        "title": "Settings",
+        "darkMode": "Dark Mode",
+        "language": "Language",
+        "english": "English",
+        "turkish": "Türkçe"
+    },
+    "recommendations": {
+        "title": "Playlist Suggestions",
+        "description": "Based on your favorite tracks",
+        "basedOn": "Based on your top tracks from",
+        "createFromSuggestions": "Create Playlist from Suggestions",
+        "refresh": "Refresh Suggestions"
+    },
+    "footer": {
+        "madeWith": "Made with",
+        "by": "by",
+        "poweredBy": "Powered by Spotify API"
+    },
+    "errors": {
+        "loginFailed": "Login failed. Please try again.",
+        "loadFailed": "Failed to load data. Please refresh."
+    }
+}

@@ -1,139 +1,127 @@
-.last-track-container {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
-    padding: 1.2rem;
-    margin: 0.8rem 0;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+.last-tracks-container {
+    max-width: 700px;
+    margin: 2rem auto;
 }
 
-.last-track-container:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    background: rgba(255, 255, 255, 0.08);
-}
-
-.last-track-content {
+.last-track-card {
     display: flex;
     align-items: center;
     gap: 1rem;
+    padding: 0.875rem 1rem;
+    background: var(--bg-glass);
+    backdrop-filter: blur(var(--blur-amount));
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+    transition: all var(--transition-normal);
 }
 
-.track-number {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.7);
-    min-width: 2rem;
+.last-track-card:hover {
+    background: var(--bg-glass-hover);
+    box-shadow: var(--shadow-sm);
 }
 
-.track-image {
-    width: 80px;
-    height: 80px;
-    border-radius: 8px;
+.last-track-card:last-child {
+    margin-bottom: 0;
+}
+
+.last-track-rank {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    min-width: 24px;
+}
+
+.last-track-image-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.last-track-image {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    transition: all 0.3s ease;
 }
 
-.track-image:hover {
-    transform: scale(1.05);
-}
-
-.track-details {
+.last-track-info {
     flex: 1;
+    min-width: 0;
+}
+
+.last-track-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 0.2rem 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.last-track-artist {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.last-track-meta {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    align-items: flex-end;
+    gap: 0.15rem;
+    flex-shrink: 0;
 }
 
-.track-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-}
-
-.track-name {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #000000;
-    margin: 0;
-    line-height: 1.2;
-}
-
-.track-artist {
-    font-size: 0.9rem;
-    color: rgba(0, 0, 0, 0.7);
-    font-weight: 500;
-    margin: 0;
-    line-height: 1.2;
-}
-
-.track-metadata {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    color: #000000;
+.meta-date,
+.meta-time {
     font-size: 0.8rem;
+    color: var(--text-tertiary);
     font-weight: 500;
-}
-
-.metadata-item {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-}
-
-.icon {
-    font-size: 1rem;
-    color: #000000;
 }
 
 @media (max-width: 768px) {
-    .last-track-container {
-        padding: 1rem;
-        margin: 0.6rem 0;
+    .last-tracks-container {
+        margin: 1.5rem auto;
     }
 
-    .track-image {
-        width: 60px;
-        height: 60px;
+    .last-track-card {
+        padding: 0.75rem;
+        gap: 0.75rem;
     }
 
-    .track-name {
-        font-size: 1rem;
+    .last-track-image-wrap {
+        width: 46px;
+        height: 46px;
     }
 
-    .track-artist {
-        font-size: 0.85rem;
+    .last-track-title {
+        font-size: 0.9rem;
     }
 
-    .track-metadata {
-        font-size: 0.75rem;
-        flex-wrap: wrap;
+    .last-track-artist {
+        font-size: 0.8rem;
     }
 }
 
 @media (max-width: 480px) {
-    .last-track-container {
-        padding: 0.8rem;
+    .last-track-image-wrap {
+        width: 40px;
+        height: 40px;
     }
 
-    .track-number {
-        font-size: 1rem;
-        min-width: 1.5rem;
+    .last-track-meta {
+        display: none;
     }
 
-    .track-image {
-        width: 50px;
-        height: 50px;
+    .last-track-rank {
+        min-width: 20px;
+        font-size: 0.85rem;
     }
-
-    .track-name {
-        font-size: 0.9rem;
-    }
-
-    .track-artist {
-        font-size: 0.8rem;
-    }
-} 
+}
