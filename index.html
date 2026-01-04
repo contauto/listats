@@ -1,14 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/listats.png" />
-    <title>Listats</title>
-    <meta name="description" content="View your Spotify listening statistics - top tracks, artists, and recently played" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+  <link rel="apple-touch-icon" href="/icon-512.png" />
+  <link rel="manifest" href="/manifest.json" />
+
+  <meta name="theme-color" content="#1DB954" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Listats" />
+
+  <title>Listats</title>
+  <meta name="description"
+    content="View your Spotify listening statistics - top tracks, artists, and recently played" />
+
+  <meta property="og:title" content="Listats" />
+  <meta property="og:description" content="View your Spotify listening statistics" />
+  <meta property="og:image" content="/icon-512.png" />
+  <meta property="og:type" content="website" />
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>
