@@ -58,6 +58,7 @@
         "cta": "Get Started with Spotify",
         "selectOption": "Select an option from the menu to explore your music stats",
         "quickActions": "Quick Actions",
+        "recentlyPlayed": "View Recent",
         "features": {
             "topTracks": "Top Tracks",
             "topTracksDesc": "See your most-played songs across different time periods",

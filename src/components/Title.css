@@ -6,10 +6,11 @@
     text-align: center;
     margin: 1.5rem 0;
     letter-spacing: -0.03em;
-    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    text-shadow: 0 2px 20px rgba(29, 185, 84, 0.15);
 }
 
 @media (max-width: 768px) {

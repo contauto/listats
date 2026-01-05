@@ -58,6 +58,7 @@
         "cta": "Spotify ile Başla",
         "selectOption": "Müzik istatistiklerini keşfetmek için menüden bir seçenek seç",
         "quickActions": "Hızlı Erişim",
+        "recentlyPlayed": "Son Çalınanları Gör",
         "features": {
             "topTracks": "En Çok Dinlenenler",
             "topTracksDesc": "Farklı zaman dilimlerinde en çok dinlediğin şarkıları gör",

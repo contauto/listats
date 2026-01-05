@@ -7,7 +7,10 @@ import {
     AUTHORIZE,
     TRACK_SHORT_TERM,
     TRACK_MEDIUM_TERM,
+    TRACK_LONG_TERM,
     ARTIST_SHORT_TERM,
+    ARTIST_MEDIUM_TERM,
+    ARTIST_LONG_TERM,
     recently
 } from '../Constants';
 import './Dashboard.css';
@@ -75,11 +78,32 @@ function Dashboard() {
         }
     ];
 
-    const quickActions = [
-        { url: TRACK_SHORT_TERM, titleKey: 'titles.topTracks4Weeks', label: t('timeRanges.shortTerm'), icon: '🎵' },
-        { url: TRACK_MEDIUM_TERM, titleKey: 'titles.topTracks6Months', label: t('timeRanges.mediumTerm'), icon: '📊' },
-        { url: ARTIST_SHORT_TERM, titleKey: 'titles.topArtists4Weeks', label: t('common.artists'), icon: '🎤' },
-        { url: recently, titleKey: 'titles.lastPlayed', label: t('common.lastPlayed'), icon: '⏱️' }
+    const quickActionGroups = [
+        {
+            title: t('common.tracks'),
+            icon: '🎵',
+            items: [
+                { url: TRACK_SHORT_TERM, titleKey: 'titles.topTracks4Weeks', label: t('timeRanges.shortTerm') },
+                { url: TRACK_MEDIUM_TERM, titleKey: 'titles.topTracks6Months', label: t('timeRanges.mediumTerm') },
+                { url: TRACK_LONG_TERM, titleKey: 'titles.topTracksAllTime', label: t('timeRanges.longTerm') }
+            ]
+        },
+        {
+            title: t('common.artists'),
+            icon: '🎤',
+            items: [
+                { url: ARTIST_SHORT_TERM, titleKey: 'titles.topArtists4Weeks', label: t('timeRanges.shortTerm') },
+                { url: ARTIST_MEDIUM_TERM, titleKey: 'titles.topArtists6Months', label: t('timeRanges.mediumTerm') },
+                { url: ARTIST_LONG_TERM, titleKey: 'titles.topArtistsAllTime', label: t('timeRanges.longTerm') }
+            ]
+        },
+        {
+            title: t('common.lastPlayed'),
+            icon: '⏱️',
+            items: [
+                { url: recently, titleKey: 'titles.lastPlayed', label: t('dashboard.recentlyPlayed') }
+            ]
+        }
     ];
 
     const containerVariants = {
@@ -159,21 +183,33 @@ function Dashboard() {
                     transition={{ delay: 0.3 }}
                 >
                     <h2 className="section-heading">{t('dashboard.quickActions')}</h2>
-                    <div className="quick-actions-grid">
-                        {quickActions.map((action, index) => (
-                            <motion.button
-                                key={index}
-                                className="quick-action-card"
-                                onClick={() => fetchData(action.url, action.titleKey)}
-                                whileHover={{ y: -4, scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
+                    <div className="quick-actions-container">
+                        {quickActionGroups.map((group, groupIndex) => (
+                            <motion.div
+                                key={groupIndex}
+                                className="quick-action-group"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 * index }}
+                                transition={{ delay: 0.1 * groupIndex }}
                             >
-                                <span className="quick-action-icon">{action.icon}</span>
-                                <span className="quick-action-label">{action.label}</span>
-                            </motion.button>
+                                <div className="group-header">
+                                    <span className="group-icon">{group.icon}</span>
+                                    <span className="group-title">{group.title}</span>
+                                </div>
+                                <div className="group-items">
+                                    {group.items.map((item, itemIndex) => (
+                                        <motion.button
+                                            key={itemIndex}
+                                            className="group-item-btn"
+                                            onClick={() => fetchData(item.url, item.titleKey)}
+                                            whileHover={{ scale: 1.02, x: 4 }}
+                                            whileTap={{ scale: 0.98 }}
+                                        >
+                                            {item.label}
+                                        </motion.button>
+                                    ))}
+                                </div>
+                            </motion.div>
                         ))}
                     </div>
                 </motion.section>
