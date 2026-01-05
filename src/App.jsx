@@ -21,6 +21,7 @@ import Spinner from './components/Spinner';
 import Track from './components/Track';
 import LastTracks from './components/LastTracks';
 import Artist from './components/Artist';
+import Dashboard from './components/Dashboard';
 import './App.css';
 
 function App() {
@@ -120,6 +121,9 @@ function App() {
                         </motion.div>
                     )}
                 </AnimatePresence>
+
+                {/* Show Dashboard when no data is displayed */}
+                {!pendingGetCall && !data && !last && <Dashboard />}
 
                 {pendingGetCall && !data && !last && <Spinner />}
 

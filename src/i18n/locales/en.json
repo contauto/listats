@@ -50,5 +50,23 @@
     "errors": {
         "loginFailed": "Login failed. Please try again.",
         "loadFailed": "Failed to load data. Please refresh."
+    },
+    "dashboard": {
+        "welcome": "Welcome to",
+        "welcomeBack": "Welcome back,",
+        "subtitle": "Discover your unique music taste with beautiful insights from your Spotify listening history",
+        "cta": "Get Started with Spotify",
+        "selectOption": "Select an option from the menu to explore your music stats",
+        "quickActions": "Quick Actions",
+        "features": {
+            "topTracks": "Top Tracks",
+            "topTracksDesc": "See your most-played songs across different time periods",
+            "topArtists": "Top Artists",
+            "topArtistsDesc": "Discover the artists that define your musical taste",
+            "timeRanges": "Time Analysis",
+            "timeRangesDesc": "Compare your listening habits over 4 weeks, 6 months, or all time",
+            "playlists": "Create Playlists",
+            "playlistsDesc": "Export your top tracks directly to your Spotify library"
+        }
     }
 }

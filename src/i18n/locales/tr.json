@@ -50,5 +50,23 @@
     "errors": {
         "loginFailed": "Giriş başarısız. Lütfen tekrar deneyin.",
         "loadFailed": "Veriler yüklenemedi. Lütfen sayfayı yenileyin."
+    },
+    "dashboard": {
+        "welcome": "Hoş geldin",
+        "welcomeBack": "Tekrar hoş geldin,",
+        "subtitle": "Spotify dinleme geçmişinden güzel içgörülerle benzersiz müzik zevkini keşfet",
+        "cta": "Spotify ile Başla",
+        "selectOption": "Müzik istatistiklerini keşfetmek için menüden bir seçenek seç",
+        "quickActions": "Hızlı Erişim",
+        "features": {
+            "topTracks": "En Çok Dinlenenler",
+            "topTracksDesc": "Farklı zaman dilimlerinde en çok dinlediğin şarkıları gör",
+            "topArtists": "En Sevilen Sanatçılar",
+            "topArtistsDesc": "Müzik zevkini tanımlayan sanatçıları keşfet",
+            "timeRanges": "Zaman Analizi",
+            "timeRangesDesc": "Dinleme alışkanlıklarını 4 hafta, 6 ay veya tüm zamanlar için karşılaştır",
+            "playlists": "Playlist Oluştur",
+            "playlistsDesc": "En sevdiğin şarkıları doğrudan Spotify kütüphanene aktar"
+        }
     }
 }
