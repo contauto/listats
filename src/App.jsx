@@ -14,7 +14,7 @@ import {
     client_secret,
     redirect_uri,
     TOKEN,
-    withUserId
+    CREATE_PLAYLIST
 } from './Constants';
 import Title from './components/Title';
 import Spinner from './components/Spinner';
@@ -27,11 +27,10 @@ import './App.css';
 function App() {
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const { isLoggedIn, data, text, userId, last } = useSelector(store => ({
+    const { isLoggedIn, data, text, last } = useSelector(store => ({
         isLoggedIn: store.isLoggedIn,
         data: store.data,
         text: store.text,
-        userId: store.userId,
         last: store.last
     }), shallowEqual);
 
@@ -39,7 +38,7 @@ function App() {
     const pendingPostCall = useApiProgress('post', base, false);
 
     const createPlaylist = (playlistBody) => {
-        return postData(withUserId + userId + '/playlists', playlistBody);
+        return postData(CREATE_PLAYLIST, playlistBody);
     };
 
     const updateCoverImage = async (playlistId) => {
@@ -60,8 +59,13 @@ function App() {
                 description: 'Powered by Listats - listats.netlify.app',
                 public: false
             });
-            await updateCoverImage(response.data.id);
             addSongs(data, response.data.id);
+            // Cover image is non-critical — attempt but don't block playlist creation
+            try {
+                await updateCoverImage(response.data.id);
+            } catch (e) {
+                console.warn('Cover image upload failed:', e);
+            }
             Swal.fire({
                 title: t('common.playlistCreated'),
                 icon: 'success',

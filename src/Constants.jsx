@@ -43,7 +43,7 @@ export const refreshBody = () => {
 export const TOKEN = 'https://accounts.spotify.com/api/token';
 export const ME = 'https://api.spotify.com/v1/me/';
 export const base = 'https://api.spotify.com';
-export const withUserId = 'https://api.spotify.com/v1/users/';
+export const CREATE_PLAYLIST = base + '/v1/me/playlists';
 export const recently = base + '/v1/me/player/recently-played';
 
 export const TRACK_SHORT_TERM = base + '/v1/me/top/tracks?limit=50&time_range=short_term';
@@ -54,11 +54,6 @@ export const ARTIST_SHORT_TERM = base + '/v1/me/top/artists?limit=50&time_range=
 export const ARTIST_MEDIUM_TERM = base + '/v1/me/top/artists?limit=50&time_range=medium_term';
 export const ARTIST_LONG_TERM = base + '/v1/me/top/artists?limit=50&time_range=long_term';
 
-export const getRecommendationsUrl = (seedTracks) => {
-  const seeds = seedTracks.slice(0, 5).map(t => t.id).join(',');
-  return `${base}/v1/recommendations?limit=20&seed_tracks=${seeds}`;
-};
-
-export const addTrackLink = (playlistId) => `${base}/v1/playlists/${playlistId}/tracks`;
+export const addTrackLink = (playlistId) => `${base}/v1/playlists/${playlistId}/items`;
 
 export const githubUrl = 'https://github.com/contauto/listats/blob/master/README.md';

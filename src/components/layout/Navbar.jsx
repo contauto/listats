@@ -21,13 +21,12 @@ function Navbar() {
     const { t } = useTranslation();
     const dispatch = useDispatch();
 
-    const { isLoggedIn, display_name, image, access_token, refresh_token, userId } = useSelector(store => ({
+    const { isLoggedIn, display_name, image, access_token, refresh_token } = useSelector(store => ({
         display_name: store.display_name,
         image: store.image,
         isLoggedIn: store.isLoggedIn,
         access_token: store.access_token,
-        refresh_token: store.refresh_token,
-        userId: store.userId
+        refresh_token: store.refresh_token
     }), shallowEqual);
 
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -59,7 +58,7 @@ function Navbar() {
         };
     }, []);
 
-    const authState = { display_name, image, isLoggedIn, access_token, refresh_token, userId };
+    const authState = { display_name, image, isLoggedIn, access_token, refresh_token };
 
     const handleLogin = () => window.location.href = AUTHORIZE();
     const handleLogout = () => dispatch(logoutSuccess());

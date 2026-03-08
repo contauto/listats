@@ -36,8 +36,7 @@ export const loginHandler = (clientId, clientSecret, url, reqBody) => {
             access_token: response.data.access_token,
             refresh_token,
             display_name: me.data.display_name,
-            image: me.data.images[0]?.url || '',
-            userId: me.data.id
+            image: me.data.images[0]?.url || ''
         };
         dispatch(loginSuccess(authState));
         return { response, me };

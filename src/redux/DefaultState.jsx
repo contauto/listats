@@ -12,6 +12,5 @@ export const originalState={
   longArtists:undefined,
   data:undefined,
   text:undefined,
-  userId:undefined,
   last:undefined
 }
